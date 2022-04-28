@@ -53,5 +53,26 @@ router.delete("/delete/:titleId", (req, res) => {
     })
 })
 
+// edit question
+router.put("/", (req, res) => {
+    let data = req.body;
+    questionModel.updateOne(
+        {_id: data.id}, 
+        {
+            question: data.question, 
+            answers: data.answers,
+            correctA: data.correctA,
+            score: data.score,
+            typeOfQ: data.typeOfQ,
+        }
+    )
+    .then((result) => {
+        res.send(result)
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})
+
 
 module.exports = router;

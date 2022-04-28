@@ -29,10 +29,22 @@ router.get("/", (req, res) => {
     })
 })
 
-// delete title
+// delete title or quiz
 router.delete("/:id", (req, res) => {
     let titleId = req.params.id;
     quizModel.deleteOne({_id: titleId})
+    .then((result) => {
+        res.send(result)
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})
+
+// edit tile of quiz
+router.put("/", (req, res) => {
+    let data = req.body;
+    quizModel.updateOne({_id: data.id}, {title: data.title})
     .then((result) => {
         res.send(result)
     })
