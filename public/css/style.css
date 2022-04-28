@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+/*============================== Manu page ===================================== */
+    /* menu group ------------------------- */
+    .menu-group{
+        /* background-color: orange; */
+        text-align: center;
+        border-bottom: 3px solid #0f54f660;
+        /* margin-bottom: 10px; */
+    }
+    .menu-task{
+        margin: 20px 8px;
+        padding: 10px 10px;
+        border: none;
+        font-size: 19px;
+        width: 120px;
+        background-color: white;
+        font-weight: bold;
+        color: #0F53F6;
+        cursor: pointer;
+    }
+    .menu-task:hover{
+        background-color: #0F53F6;
+        color: white;
+    }
+    .onPage{
+        padding: 10px 10px;
+        border: none;
+        font-size: 19px;
+        color: #0F53F6;
+        font-weight: bold;
+        border-bottom: 3px solid #0F53F6;
+        background-color: white;
+    }
+hr {
+    border: 1px solid blue;
+}
+/*=========================== Page Create Quiz ===================================*/
+
+    /* Form to Create Questions */
+    .create-container{
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        /* background-color: rgb(34, 158, 158); */
+        padding: 30px;
+    }
+
+    .create-container .create-quiz{
+        /* background-color: brown; */
+        width: 55%;
+        text-align: center;
+        padding: 10px;
+    }
+    .modal-content .create-container .create-quiz{
+        /* background-color: brown; */
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .create-container .create-quiz .group-btn{
+        text-align: right;
+    }
+
+    .create-container .create-quiz .group-btn .button{
+        padding: 5px 30px;
+        background-color: #0F53F6;
+        border: none;
+        border-radius: 3px;
+        color: white;
+    }
+
+    .create-container .create-quiz .title-quiz{
+        background-color: blue;
+        height: 80px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        margin: 10px 0;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .create-container .create-quiz .title-quiz .title{
+        width: 100%;
+        height: 30px;
+    }
+
+    .create-container .create-quiz .create-question{
+        /* background-color: aqua; */
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    }
+
+    .create-container .create-quiz .create-question .quiz-question{
+        /* background-color: blueviolet; */
+        border-bottom: 2px solid #0F53F6;
+    }
+
+    .create-container .create-quiz .create-question .quiz-question .question{
+        width: 100%;
+        height: 50px;
+        box-sizing: border-box;
+        border: none;
+        padding: 0 20px;
+        outline: none;
+    }
+
+    .create-container .create-quiz .create-question .answers-container{
+        margin: 15px 0 0 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .create-container .create-quiz .create-question .answers-container .left{
+        width: 70%;
+        /* background-color: rgb(104, 63, 63); */
+        text-align: start;
+    }
+    
+    .create-container .create-quiz .create-question .answers-container .left .each-answer .answer-group{
+        width: 90%;
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 0 0 10px 10px;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid #000;
+    }
+
+    .create-container .create-quiz .create-question .answers-container .left .button-create{
+        padding: 5px 20px;
+        margin-top: 10px;
+        background-color: #0F53F6;
+        color: white;
+        border: none;
+        border-radius: 3px;
+    }
+
+    .create-container .create-quiz .create-question .answers-container .right{
+        text-align: end;
+        /* background-color: rgb(201, 151, 90); */
+    }
+
+    .create-container .create-quiz .create-question .answers-container .right .question-type .types{
+        /* background-color: blue; */
+        padding: 5px 20px;
+        outline: none;
+        /* color: white; */
+    }
+
+    .create-container .create-quiz .create-question .answers-container .right .score{
+        display: flex;
+        margin-top: 180px;
+    }
+
+    .create-container .create-quiz .create-question .answers-container .right .score .scores-create{
+        width: 70px;
+    }
+
+       /* show the question create */
+        .show-quizs{
+            margin-top: 20px;
+        }
+        .contain-each-question{
+            padding: 10px 50px;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            margin-top: 15px;
+        }
+        .questions{
+            padding: 10px;
+            font-size: 19px;
+            color: #0F53F6;
+            font-weight: bold;
+            border-bottom: 2px solid #0F53F6;
+            text-align: left;
+        }
+        .contain-each-answer{
+            align-items: center;
+            justify-content: start;
+            display: flex;
+            margin: 10px 0;
+        }
+        .contain-each-answer li{
+            list-style-type: circle;
+            font-size: 40px;
+            width: 30px;
+        }
+        .contain-answer{
+            border-bottom: 1px solid rgba(92, 92, 92, 0.658);
+            width: 100%;
+            padding: 10px;
+            text-align: left;
+        }
+        .contain-each-answer .correct{
+            list-style-type: disc;
+            color: #0F53F6;
+            font-size: 40px;
+            width: 30px;
+        }
+        .show-quizs .contain-each-question .question-buttom{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .show-quizs .contain-each-question .question-buttom .btn{
+            width: 90px;
+            margin: 0 0 0 10px;
+            padding: 4px 0;
+        }
+/* ========================================================================================== */
