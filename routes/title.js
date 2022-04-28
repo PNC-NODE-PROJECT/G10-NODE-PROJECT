@@ -18,4 +18,15 @@ router.post("/", (req, res) => {
     })
 })
 
+// get title of quiz
+router.get("/", (req, res) => {
+    quizModel.find()
+    .then((result) => {
+        res.send(result)
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})
+
 module.exports = router;
