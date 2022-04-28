@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/PNC-NODE-PROJECT/G10-NODE-PROJECT#readme",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.18.0",
+    "mongoose": "^6.3.1"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.15"
   }
 }
