@@ -41,5 +41,17 @@ router.delete("/:id", (req, res) => {
     })
 })
 
+// delete many question
+router.delete("/delete/:titleId", (req, res) => {
+    let id = req.params.titleId;
+    questionModel.deleteMany({idOfQ: id})
+    .then((result) => {
+        res.send(result)
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})
+
 
 module.exports = router;

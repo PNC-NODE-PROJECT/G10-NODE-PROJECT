@@ -29,4 +29,16 @@ router.get("/", (req, res) => {
     })
 })
 
+// delete title
+router.delete("/:id", (req, res) => {
+    let titleId = req.params.id;
+    quizModel.deleteOne({_id: titleId})
+    .then((result) => {
+        res.send(result)
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})
+
 module.exports = router;
