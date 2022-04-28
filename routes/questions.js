@@ -29,6 +29,17 @@ router.get("/:quizId", (req, res) => {
     })
 })
 
+// delete a question
+router.delete("/:id", (req, res) => {
+    let questId = req.params.id;
+    questionModel.deleteOne({_id: questId})
+    .then((result) => {
+        res.send(result)
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})
 
 
 module.exports = router;
