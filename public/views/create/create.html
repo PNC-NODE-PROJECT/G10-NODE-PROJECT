@@ -6,34 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
     <!-- menu -->
+    
     <div class="menu-container">
         <div class="menu-group">
-            <button class="onPage menu-task" type="button" id="button-task" onclick="displayMenuPage()">Your Task</button>
-            <button class="menu-task" type="button" id="button-create" onclick="displayCreatePage()">Create</button>
+            <button class="menu-task" type="button" id="button-task">Your Task</button>
+            <button class="onPage menu-task" type="button" id="button-create">Create</button>
             <button class="menu-task" type="button" id="button-instruction">Instruction</button>
         </div>
     </div>
     <!-- =================== create page ============== -->
-    <div class="create-containers">
+    <div class="create-containers position">
         <div class="create-container">
             <div class="create-quiz">
                 <div class="group-btn">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Task</button>
-                    <button type="button" class="button-save button" onclick="displayMenuPage()">Save</button>
-                    <button type="button" class="button-concel button"  onclick="displayMenuPage()">concel</button>
+                    <a href="../../index.html">
+                        <button type="button" class="button-save button">Save</button>
+                    </a>
+                    <button type="button" class="button-concel button" onclick="concelTask()">concel</button>
                 </div>
-                <div class="title-quiz">
+                <div class="title-quiz" onclick="showEditeTitle()">
                     <!-- <input type="text" id="title-quiz" class="title"  value="Quiz Title"> -->
-                    <h2>Title Quiz</h2>
+                    <!-- <h2 class="quiz-title">Title Quiz</h2> -->
                 </div>
                 <div class="create-question">
                     <form action="">
@@ -58,7 +55,7 @@
                                     <input type="radio" name="answer" class="type-of-input">
                                     <input type="text" class="answer-group" placeholder="Answer">
                                 </div>
-                                <button type="button" class="button-create" onclick="checkAllInput()">Create</button>
+                                <button type="button" class="button-create" onclick="addQuestionToMongoDB()">Create</button>
                             </div>
                             <div class="right">
                                 <div class="question-type">
@@ -81,64 +78,71 @@
 
 
 
+    <div id="title-edite">
+        <dialog open>
+            <div class="title-content">
+                <h1>TITLE QUIZ</h1>
+                <div><input type="text" class="title-input" placeholder="Title"></div>
+                <button type="button" class="button-edite-title" onclick="editeTitleToMongDB()">EDITE</button>
+                <button type="button" class="button-add-title" onclick="addTitleToMongDB()">CREATE</button>
+            </div>
+        </dialog>
+    </div>
 
 
 
-        <!-- The Modal -->
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="create-container">
-                    <div class="create-quiz">
-                        <div class="create-question">
-                            <form action="">
-                                <div class="quiz-question">
-                                    <input type="text" class="question question-edite" id="question" placeholder="Question">
-                                </div>
-                                <div class="answers-container">
-                                    <div class="left">
-                                        <div class="each-answer">
-                                            <input type="radio" name="correction" class="type-of-input">
-                                            <input type="text" class="answer-group answer-edite" placeholder="Answer">
-                                        </div>
-                                        <div class="each-answer">
-                                            <input type="radio" name="correction" class="type-of-input">
-                                            <input type="text" class="answer-group answer-edite" placeholder="Answer">
-                                        </div>
-                                        <div class="each-answer">
-                                            <input type="radio" name="correction" class="type-of-input">
-                                            <input type="text" class="answer-group answer-edite" placeholder="Answer">
-                                        </div>
-                                        <div class="each-answer">
-                                            <input type="radio" name="correction" class="type-of-input">
-                                            <input type="text" class="answer-group answer-edite" placeholder="Answer">
-                                        </div>
-                                        <button type="button" class="button-create" onclick="checkAllInput()">Create</button>
+
+
+    <div id="questions-edite" >
+        <dialog open>
+                    <div class="create-container">
+                        <div class="create-quiz">
+                            <div class="create-question">
+                                <form action="">
+                                    <div class="quiz-question">
+                                        <input type="text" class="question question-edite" id="question" placeholder="Question">
                                     </div>
-                                    <div class="right">
-                                        <div class="question-type">
-                                            <select id="type-of-answer" class="types types-edite" onclick="modalOptionAnswers()">
-                                                <option value="radio">Radio</option>
-                                                <option value="checkbox">Checkbox</option>
-                                            </select>
+                                    <div class="answers-container">
+                                        <div class="left left-edite">
+                                            <div class="each-answer">
+                                                <input type="radio" name="correction" class="type-of-input">
+                                                <input type="text" class="answer-group answer-edite" placeholder="Answer">
+                                            </div>
+                                            <div class="each-answer">
+                                                <input type="radio" name="correction" class="type-of-input">
+                                                <input type="text" class="answer-group answer-edite" placeholder="Answer">
+                                            </div>
+                                            <div class="each-answer">
+                                                <input type="radio" name="correction" class="type-of-input">
+                                                <input type="text" class="answer-group answer-edite" placeholder="Answer">
+                                            </div>
+                                            <div class="each-answer">
+                                                <input type="radio" name="correction" class="type-of-input">
+                                                <input type="text" class="answer-group answer-edite" placeholder="Answer">
+                                            </div>
+                                            <button type="button" id="edite-question" class="button-create" onclick="editeQuestionInMongDB()">Update</button>
+                                            <button type="button" class="button-concell" onclick="hideEditeQuestion()">Concel</button>
                                         </div>
-                                        <div class="score">
-                                            Score: <input type="number" class="scores-create scores-edite" id="myScores" value="0">
+                                        <div class="right">
+                                            <div class="question-type">
+                                                <select id="type-of-answer" class="types types-edite" onclick="modalOptionAnswers()">
+                                                    <option value="radio">Radio</option>
+                                                    <option value="checkbox">Checkbox</option>
+                                                </select>
+                                            </div>
+                                            <div class="score">
+                                                Score: <input type="number" class="scores-create scores-edite" id="myScores" value="0">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>    
-        </div>
-    </div>
+        </dialog>
+      </div>
+  
     <script src="create.js"></script>
 </body>
 </html>
