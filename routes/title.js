@@ -53,4 +53,15 @@ router.put("/", (req, res) => {
     })
 })
 
+// get olny one quiz title 
+router.get("/:id", (req, res) => {
+    quizModel.find({_id : req.params.id})
+    .then((result) => {
+        res.send(result);
+    })
+    .catch((error) => {
+        res.send(error);
+    })
+})
+
 module.exports = router;

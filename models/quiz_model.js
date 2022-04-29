@@ -38,10 +38,10 @@ const questionSchema = new mongoose.Schema({
         required: true
     },
     idOfQ: {
-        type: Object,
+        type: String,
         required: true
     },
-
+ 
 });
 
 const questionModel = mongoose.model("questions", questionSchema);
