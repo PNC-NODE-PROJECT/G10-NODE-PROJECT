@@ -67,6 +67,7 @@ router.put("/", (req, res) => {
         }
     )
     .then((result) => {
+        console.log("you are success!");
         res.send(result)
     })
     .catch((error) => {
@@ -74,5 +75,10 @@ router.put("/", (req, res) => {
     })
 })
 
-
+router.get("/q", (req, res) => {
+    questionModel.find()
+    .then((result) => {
+        res.send(result);
+    })
+})
 module.exports = router;

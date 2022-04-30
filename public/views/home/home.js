@@ -1,12 +1,11 @@
 
-const URL = 'http://localhost:80';
 
 function displayQuiz() {
     let homeContainer = document.createElement("div");
     homeContainer.className = "home-container row justify-content-center";
     container.appendChild(homeContainer);
     
-    axios.get(URL + "/titles").then((result) => {
+    axios.get("/titles").then((result) => {
         console.log(result.data)
         let titles = result.data;
         for (let title of titles) {
@@ -36,7 +35,7 @@ function displayQuiz() {
             btnPlay.textContent = "Play";
             btnPlay.id = title._id;
             footerLeft.appendChild(btnPlay);
-            btnPlay.addEventListener("click", play);
+            // btnPlay.addEventListener("click", play);
 
             let footerRight = document.createElement("div");
             footerRight.className = "right d-flex align-items-center";
@@ -52,29 +51,6 @@ function displayQuiz() {
 
         }
     })
-}
-
-
-
-function play(event) {
-    let quiz = event.target.id;
-    console.log(quiz);
-    getQuestData(quiz);
-    let listQ = document.querySelector(".home-container");
-    listQ.style.display = "none";
-    displayQuest(0, quiz);
-}
-
-function getQuestData(id) {
-    axios.get(URL + "/questions/" + id).then((result) => {
-        let data = result.data;
-        saveData(data);
-    }) 
-}
-
-// CREATE FUNCTION TO SAVE DATA TO LOCALSTORAGE
-function saveData(data) {
-    localStorage.setItem('quizdatas', JSON.stringify(data));
 }
 
 

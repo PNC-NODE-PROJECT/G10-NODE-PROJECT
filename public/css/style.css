@@ -48,6 +48,7 @@ hr {
         display: flex;
         /* background-color: rgb(34, 158, 158); */
         padding: 30px;
+        /* z-index: 1; */
     }
 
     .create-container .create-quiz{
@@ -132,7 +133,7 @@ hr {
         border-bottom: 1px solid #000;
     }
 
-    .create-container .create-quiz .create-question .answers-container .left .button-create{
+    .create-container .create-quiz .create-question .answers-container .left .button-create, .button-concell{
         padding: 5px 20px;
         margin-top: 10px;
         background-color: #0F53F6;
@@ -212,5 +213,169 @@ hr {
             margin: 0 0 0 10px;
             padding: 4px 0;
         }
+
+
+        .modal-content{
+            /* width: 55%; */
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            text-align: right;
+            background-color: gold;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            top: -90px;
+            left: 50px;
+        }
+        .modal-content .modal{
+            width: 55%;
+            
+        }
 /* ========================================================================================== */
 
+
+#title-edite{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 10;
+    /* display: none; */
+  }
+
+#questions-edite{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 10;
+    display: none;
+  }
+  
+  dialog {
+      position: fixed;
+      top: 10vh;
+      left: 20%;
+      width: 55%;
+    z-index: 100;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  #questions-edite .create-container .create-quiz{
+      width: 100%;
+  }
+
+    #title-edite .title-content{
+        background-color: white;
+        text-align: center;
+        padding: 30px;
+    
+    }
+    #title-edite .title-content .title-input{
+        padding: 10px;
+        margin: 70px 0 50px 0;
+        width: 70%;
+        border: none;
+        border-bottom: 1px solid #000;
+        font-size: 20px;
+        outline: none;
+    }
+    #title-edite .title-content .button-edite-title{
+        padding: 10px 30px;
+        background-color: #0F53F6;
+        border: none;
+        color: white;
+        display: none;
+    }
+    #title-edite .title-content .button-add-title{
+        padding: 10px 30px;
+        background-color: #0F53F6;
+        border: none;
+        color: white;
+    }
+
+
+/* --------------------display quiz---------------------- */
+
+.form, .block-result {
+    width: 60%;
+    margin: auto;
+}
+
+
+.answers  {
+    margin-top: 20px;
+} 
+.answer {
+    margin-top: 10px;
+}
+
+.answer label {
+    margin-left: 5px;
+}
+
+
+/* quiz card */
+
+.card {
+    background: rgb(226, 222, 163);
+}
+
+
+
+.icons {
+    margin-left: 10px;
+    font-size: 30px;
+}
+
+.block-score, .divTitleQuiz {
+    background: rgb(223, 207, 106);
+    padding: 30px 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    border-radius: 7px;
+}
+
+.question-correction, .question {
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-score, .score, .text-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.block-answer-correction {
+    margin-top: 10px;
+}
+
+.answer-correction {
+    list-style: none;
+    margin-top: 5px;
+}
+.text-answer-correction {
+    margin-left: 10px;
+}
+
+.each-correction, .each-quest {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.815);
+    border-top: 8px solid #31c727;
+    border-radius: 7px 7px 7px 7px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+
+}
