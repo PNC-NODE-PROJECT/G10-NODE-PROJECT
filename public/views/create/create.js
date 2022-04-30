@@ -1,40 +1,89 @@
-// const { json } = require("express/lib/response");
-
-// data =================================
+//====================== data =============================
 let questionID = [];
 let titleID = [];
 
-
-// =============== data validation ========================
-function checkAllInput(){
-    let condition = true;
-    let question = document.querySelector('.question').value;
-    if (question.length == 0){
-        alert('You need to input Your QUESTION!')
-        condition = false;
-    } if(question.length !== 0){
-        let answers = document.querySelectorAll('.answer-group');
-        let chooseAnswers =  document.querySelectorAll('.type-of-input')
-        let checkAnswers = 0;
-        let checkChooseAnswers = 0;
-        for (i=0; i< 4; i++){
-            if (answers[i].value.length==0){
-                checkAnswers = 1;
-            } if (chooseAnswers[i].checked){
-                checkChooseAnswers = 1;
-            }
-        }
-        if (checkAnswers == 1){
-            alert('You need to input all of your ANSWERS');
-            condition = false;
-        } else if(checkChooseAnswers==0){
-            alert('You need to choose the correct answers!')
-            condition = false;
-        }
-    } if(condition){
-        addQuestionToMongoDB();
+// display when data input validation is not correct
+function showInputError(input, errorInput){
+    input.textContent = errorInput
+    console.log(errorInput);
+    if (errorInput.length < 1){
+        return true;
+    }else{
+        return false;
     }
 }
+// =============== data validation ========================
+// validation create question
+function checkAllInput(){
+    let questionData = document.querySelector(".question");
+    let answers = document.querySelectorAll(".answer-group");
+    let correctionData = document.querySelectorAll(".type-of-input");
+
+    let question = document.querySelector(".question-error");
+    let answer1 = document.querySelector(".error-a1");
+    let answer2 = document.querySelector(".error-a2");
+    let answer3 = document.querySelector(".error-a3");
+    let answer4 = document.querySelector(".error-a4");
+    let correction = document.querySelector(".no-answer");
+
+    let answerError = [];
+    let correctionError = true;
+    for (i=0; i<4; i++){
+        if(i === 0){let answerEmpty = answers[i].value === "" ? showInputError(answer1, "Please check your answer!"):showInputError(answer1, ""); answerEmpty === false ? answerError.push(i):answerError}
+        if(i === 1){let answerEmpty = answers[i].value === "" ? showInputError(answer2, "Please check your answer!"):showInputError(answer2, ""); answerEmpty === false ? answerError.push(i):answerError}
+        if(i === 2){let answerEmpty = answers[i].value === "" ? showInputError(answer3, "Please check your answer!"):showInputError(answer3, ""); answerEmpty === false ? answerError.push(i):answerError}
+        if(i === 3){let answerEmpty = answers[i].value === "" ? showInputError(answer4, "Please check your answer!"):showInputError(answer4, ""); answerEmpty === false ? answerError.push(i):answerError}
+        if(correctionData[i].checked){
+            correctionError = false
+        }
+    }
+
+    let questionResporn =  questionData.value === "" ? showInputError(question, "Please check you question!"):showInputError(question, "");
+    let noCorrect = correctionError === true ? showInputError(correction, "Please choose the correct answer!"):showInputError(correction, "");
+
+    if(questionResporn && noCorrect && answerError.length==0){
+        // console.log("Your Data validation is success");
+        addQuestionToMongoDB()
+    }
+    
+}
+
+// validation edite question
+function checkAllEditInput(){
+    let questionData = document.querySelector(".question-edite");
+    let answers = document.querySelectorAll(".answer-edite");
+    let correctionData = document.getElementsByName("correction");
+
+    let question = document.querySelector(".question-edit-error");
+    let answer1 = document.querySelector(".answer1-edit-error");
+    let answer2 = document.querySelector(".answer2-edit-error");
+    let answer3 = document.querySelector(".answer3-edit-error");
+    let answer4 = document.querySelector(".answer4-edit-error");
+    let correction = document.querySelector(".no-edit-answer");
+
+    let answerError = [];
+    let correctionError = true;
+    for (i=0; i<4; i++){
+        if(i === 0){let answerEmpty = answers[i].value === "" ? showInputError(answer1, "Please check your answer!"):showInputError(answer1, ""); answerEmpty === false ? answerError.push(i):answerError}
+        if(i === 1){let answerEmpty = answers[i].value === "" ? showInputError(answer2, "Please check your answer!"):showInputError(answer2, ""); answerEmpty === false ? answerError.push(i):answerError}
+        if(i === 2){let answerEmpty = answers[i].value === "" ? showInputError(answer3, "Please check your answer!"):showInputError(answer3, ""); answerEmpty === false ? answerError.push(i):answerError}
+        if(i === 3){let answerEmpty = answers[i].value === "" ? showInputError(answer4, "Please check your answer!"):showInputError(answer4, ""); answerEmpty === false ? answerError.push(i):answerError}
+        if(correctionData[i].checked){
+            correctionError = false
+        }
+    }
+
+    let questionResporn =  questionData.value === "" ? showInputError(question, "Please check you question!"):showInputError(question, "");
+    let noCorrect = correctionError === true ? showInputError(correction, "Please choose the correct answer!"):showInputError(correction, "");
+
+    if(questionResporn && noCorrect && answerError.length==0){
+        console.log("Your Data validation is success");
+        editeQuestionInMongDB()
+    }
+    
+}
+
+
 
 // ================ Change Option Answers ==================
 function optionAnswers(){
@@ -42,128 +91,6 @@ function optionAnswers(){
     let changeOption = document.querySelectorAll('.type-of-input');
     for (i=0; i< 4; i++){
         changeOption[i].type = options;
-        // alert("You can change Your option!")
-    }
-}
-
-// ================ store data =============================
-function storeData(){
-    let eachData = {};
-    eachData['question'] = document.querySelector('.question').value;
-    eachData['0'] = document.querySelectorAll('.answer-group')[0].value;
-    eachData['1'] = document.querySelectorAll('.answer-group')[1].value;
-    eachData['2'] = document.querySelectorAll('.answer-group')[2].value;
-    eachData['3'] = document.querySelectorAll('.answer-group')[3].value;
-    let changeOption = document.querySelectorAll('.type-of-input');
-    for (i=0; i< 4; i++){
-        if (changeOption[i].checked){
-            eachData['correctAnswer_'+i] = i;
-        }
-    }
-    eachData['optionAnswers']=document.querySelector('#list').value;
-    eachData['scores']=document.querySelector('.scores-create').value;
-    
-    data.splice(0, 0, eachData);
-    console.log(data);
-    let deleteElement = document.querySelector('.show-quizs');
-    if (data.length > 1){
-        // deleteElement.parentElement.removeChild()
-        console.log(deleteElement);
-        
-    }
-    
-    // displayCreatePage();
-    showQuiz();
-}
-
-// ================ show the question ======================
-function showQuiz(){
-    let containShowQuiz = document.querySelector('.show-quizs');
-    // let removeObj = document.querySelector('#add-question-page');
-    let ObjToRemove = document.getElementsByClassName('contain-each-question');
-    let comp = ObjToRemove.length;
-    let comNum = 0;
-    // Check to remove the previous answers
-    if (data.length>=0){
-        while(comNum<comp){
-            containShowQuiz.removeChild(ObjToRemove[0]);
-            comNum += 1;
-            console.log("Can delete");
-        }
-    }
-    
-    for (index=0; index<data.length; index++){
-        let containEachQuiz = document.createElement('div');
-        containEachQuiz.className='contain-each-question';
-        containEachQuiz.id=index;
-        containShowQuiz.appendChild(containEachQuiz);
-        
-        let question = document.createElement('div');
-        question.className='questions';
-        question.textContent = data[index]['question'];
-        containEachQuiz.appendChild(question);
-
-        for (i=0; i<4; i++){
-            let containAnswers = document.createElement('div');
-            containAnswers.className='contain-answers';
-            // contian each answers ============================
-            let containEachAnswer = document.createElement('div');
-            containEachAnswer.className='contain-each-answer';
-            // contain answers option===========
-            // let answerOption = document.createElement('div');
-            // answerOption.className='answerOption';
-            let option = document.createElement('li');
-            if (i == data[index]['correctAnswer_'+i]){
-                option.className='correct';
-            }
-            // answerOption.appendChild(option);
-            containEachAnswer.appendChild(option);
-            // answerOption.appendChild(option);
-            // containEachAnswer.appendChild(answerOption);
-            // contain answers =================
-            let containAnswer = document.createElement('div');
-            containAnswer.className = 'contain-answer';
-            containAnswer.textContent = data[index][i];
-            containEachAnswer.appendChild(containAnswer);
-            containEachQuiz.appendChild(containEachAnswer);
-            // console.log(containEachAnswer);
-        }
-        // score update delete
-        let container = document.createElement('div');
-        container.className="question-buttom"
-
-        let score = document.createElement('p');
-        score.className = "score";
-        score.textContent = "Score : " + document.querySelector('.scores-create').value;
-        container.appendChild(score);
-        
-        let group_update = document.createElement('div');
-        group_update.className="update-question";
-        
-        let delete_question = document.createElement('button');
-        delete_question.className = "btn";
-        delete_question.id = "delete";
-        delete_question.textContent = "DELETE";
-        group_update.appendChild(delete_question);
-        
-        let edite_question = document.createElement('button');
-        edite_question.className = "btn";
-        edite_question.id = "edite";
-        edite_question.textContent = "EDITE";
-        group_update.appendChild(edite_question);
-        
-        container.appendChild(group_update);
-        containEachQuiz.appendChild(container);
-        
-        
-        // clear create question
-        document.querySelector('.question').value='';
-        document.querySelector('.scores-create').value=0;
-        for (i=0; i<4; i++){
-            let eachDelete = document.getElementsByClassName('each-answer')[i];
-            eachDelete.childNodes[1].checked=false;
-            eachDelete.childNodes[3].value='';
-        }
     }
 }
 
@@ -174,7 +101,6 @@ function modalOptionAnswers(){
     let changeOption = document.getElementsByName('correction');
     for (i=0; i< 4; i++){
         changeOption[i].type = options;
-        // alert("You can change Your option!")
     }
 }
 
@@ -182,6 +108,7 @@ function hideEditeQuestion(){
     let hideEditeQuestion = document.querySelector("#questions-edite");
     hideEditeQuestion.style.display = "none";
 }
+
 function showEditeQuestion(){
     let hideEditeQuestion = document.querySelector("#questions-edite");
     hideEditeQuestion.style.display = "block";
@@ -191,13 +118,13 @@ function hideEditeTitle(){
     let hideEditeQuestion = document.querySelector("#title-edite");
     hideEditeQuestion.style.display = "none";
 }
+
 function showEditeTitle(){
     let hideEditeQuestion = document.querySelector("#title-edite");
     hideEditeQuestion.style.display = "block";
 }
 
-// Add data title ======================================
-ADD_TITLE = "/titles"
+//================= Add data title ==================
 function addTitleToMongDB(){
     // let quizTitle = document.getElementsByClassName('quiz-title');
     let addTitle = document.querySelector('.title-input');
@@ -206,8 +133,12 @@ function addTitleToMongDB(){
     let contentTitle = document.querySelector(".title-quiz");
     let title = document.createElement('h2');
     title.className="quiz-title";
-    data = {title: addTitle.value};
-    axios.post(ADD_TITLE, data).then((response) => {
+    if(addTitle.value.length>0){
+        data = {title: addTitle.value};
+    }else{
+        data = {title: "Untitle"};
+    }
+    axios.post("/titles", data).then((response) => {
         let result = response.data;
         showBtnEditeTitle.style.display = "block";
         hideBtnCreateTitle.style.display = "none";
@@ -220,15 +151,19 @@ function addTitleToMongDB(){
     hideEditeTitle()
 }
 
-
+// ============== edit data title quiz ==============
 function editeTitleToMongDB(){
     // let quizTitle = document.getElementsByClassName('quiz-title');
     let addTitle = document.querySelector('.title-input');
     let title = document.querySelector('.quiz-title');
     let contentTitle = document.querySelector(".title-quiz");
+    if(addTitle.value.length>0){
+        data = {id: contentTitle.childNodes[5].id, title: addTitle.value};
+    }else{
+        data = {id: contentTitle.childNodes[5].id, title: "Untitle"};  
+    }
 
-    data = {id: contentTitle.childNodes[5].id, title: addTitle.value};
-    axios.put(ADD_TITLE, data).then((response) => {
+    axios.put("/titles", data).then((response) => {
         let result = response.config.data;
         // title.id = result._id;
         // contentTitle.appendChild(title);
@@ -241,7 +176,7 @@ function editeTitleToMongDB(){
     hideEditeTitle()
 }
 
-
+// ==== add each question user create to mongoDB ====
 function addQuestionToMongoDB(){
     let contentTitle = document.querySelector(".title-quiz");
     let question = document.querySelector(".question");
@@ -355,12 +290,11 @@ function addQuestionToMongoDB(){
                 eachDelete.childNodes[3].value='';
             }
         // }
-        // console.log(containShowQuiz);
+        console.log(containShowQuiz);
     })
 }
 
-
-// Delete Question ====================
+// ============== Delete Question ====================
 function deleteQuestion(e){
     let contentParent = document.querySelector(".show-quizs");
     let pare = e.target;
@@ -374,7 +308,7 @@ function deleteQuestion(e){
     console.log(taskToDelete);
 }
 
-// Edite Question =====================
+//========== show data question for edite ============
 function showDataToUpdate(e){
     showEditeQuestion();
     let id = e.target.parentNode.parentNode.parentNode.id;
@@ -449,7 +383,6 @@ function editeQuestionInMongDB(){
         // hideEditeQuestion();
         // questionID = [];
 }
-
 
 // Concel create tasks
 function concelTask(){

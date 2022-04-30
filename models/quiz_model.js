@@ -44,7 +44,23 @@ const questionSchema = new mongoose.Schema({
  
 });
 
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
+})
+
 const questionModel = mongoose.model("questions", questionSchema);
 const quizModel = mongoose.model("quizes", quizSchema);
+const userModel = mongoose.model("users", userSchema);
 
-module.exports = {questionModel, quizModel};
+module.exports = {questionModel, quizModel, userModel};
