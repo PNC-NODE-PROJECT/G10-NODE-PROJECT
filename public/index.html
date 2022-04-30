@@ -5,8 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <a href="views/create/create.html">Move to create page</a>
+    <!--============================ First page ================================-->
+    <div class="index-container" id="login">
+        <div class="index-page">
+            <div class="index-right">
+                <h1 class="index-right-text1">Welcome to Quiz</h1>
+                <p class="index-right-text2">Starting your Quiz and Create Your own Quiz here</p>
+            </div>
+            <div class="index-left">
+                <h1 class="index-title">Login</h1>
+                <input type="text" class="index-input login-username" placeholder="User Name">
+                <small id="login-username-error"></small>
+                <input type="password" class="index-input login-user-password" placeholder="Password">
+                <small id="login-password-error"></small><br>
+                <button class="index-button" type="button" onclick="loginDataValidation()">Next</button><br>
+                <p>Click on <a href="#" onclick="hidLogin()">HERE</a> to create your own account</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup" style="display: none;">
+        <div class="index-page">
+            <div class="index-left">
+                <h1 class="index-title">Sing Up</h1>
+
+                <input type="text" class="index-input signup-username" placeholder="User Name">
+                <small class="username-error"></small>
+
+                <input type="email" class="index-input signup-email" placeholder="Email">
+                <small class="email-error"></small>
+
+                <input type="password" class="index-input signup-password" placeholder="Password">
+                <small class="password-error"></small><br>
+
+                <button class="index-button" type="button" onclick="signUpDataValidation()">Next</button><br>
+                <p>Click on <a href="#" onclick="hidSignup()">HERE</a> to create your own account</p>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
 </body>
 </html>

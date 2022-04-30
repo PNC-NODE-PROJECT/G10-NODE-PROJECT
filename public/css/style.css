@@ -4,6 +4,97 @@
     font-family: sans-serif;
 }
 
+/* ========================= Page login Sign up ================================ */
+.index-container{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-image: url("image/page1.png");
+    background-color: #0F53F6;
+    height: 370px;
+    padding-top: 100px;
+}
+
+#signup{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin: -130px 0 0 250px;
+    /* background-color: #ccf60f; */
+}
+
+#signup .index-page .index-left{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.index-page{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+}
+
+.index-left{
+    text-align: center;
+    background-color: #ffffff;
+    margin-left: 50px;
+    width: 50%;
+    flex-wrap: wrap;
+    padding: 20px;
+    /* height: 350px; */
+    border-radius: 4px;
+    margin-top: 210px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.index-left .index-title{
+    margin: 20px 0;
+}
+
+.index-right{
+
+    height: 385px;
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 150px; */
+    font-size: 26px;
+    /* display: flex; */
+    margin-right: 50px;
+    width: 50%;
+    color: white;
+}
+.index-right-text2{
+    font-size: 32px;
+    line-height: 60px;
+}
+.index-img{
+    height: 320px;
+}
+.index-input{
+    width: 350px;
+    padding: 15px;
+    margin: 15px;
+    border: none;
+    border-bottom: 1px solid gray;
+    border-radius: 2px;
+    outline: none;
+    font-size: 15px;
+}
+.index-button{
+    padding: 10px 25px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 15px;
+    margin: 20px;
+    color: white;
+    background-color: #0F53F6;
+}
+
+small{
+    color: red;
+}
+
 /*============================== Manu page ===================================== */
     /* menu group ------------------------- */
     .menu-group{
@@ -84,6 +175,15 @@ hr {
         display: flex;
         margin: 10px 0;
         border-radius: 5px 5px 0 0;
+        color: #ffffff;
+    }
+    .create-container .create-quiz .icon{
+        text-align: right;
+        color: #ffffff;
+        font-size: 30px;
+        padding: 15px;
+        margin-bottom: -60px;
+
     }
 
     .create-container .create-quiz .title-quiz .title{
@@ -98,8 +198,8 @@ hr {
     }
 
     .create-container .create-quiz .create-question .quiz-question{
-        /* background-color: blueviolet; */
         border-bottom: 2px solid #0F53F6;
+        text-align: left;
     }
 
     .create-container .create-quiz .create-question .quiz-question .question{
