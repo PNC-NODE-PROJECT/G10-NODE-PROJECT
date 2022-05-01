@@ -72,3 +72,8 @@ function saveData(data) {
 
 let container = document.querySelector(".main-container");
 displayQuiz();
+
+function goToCreatePage(){
+    let Password = new URLSearchParams(window.location.search).get("id")
+    location.replace("http://localhost/views/create/create.html?id="+Password)
+}

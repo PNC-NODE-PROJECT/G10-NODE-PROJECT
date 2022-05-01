@@ -1,6 +1,7 @@
 function hidLogin(){
     document.querySelector("#login").style.display = "none";
     document.querySelector("#signup").style.display = "flex";
+    // hidLogin();
 }
 
 function hidSignup(){
@@ -8,21 +9,23 @@ function hidSignup(){
     document.querySelector("#signup").style.display = "none";
 }
 
-// data validation ===================================
-
-function loginDataValidation(){
+// data validation ==================================
+function loginDataValidation(user, password){
     let userName = document.querySelector(".login-username");
     let userPassword = document.querySelector(".login-user-password");
     
     let userNameError = document.querySelector("#login-username-error");
     let passwordNameError = document.querySelector("#login-password-error");
     
-    let nameValid = userName.value === "" ? showInputError(userNameError, "Please check you user name!") : showInputError(userNameError, "");
-    let passwordValid = userPassword.value === "" ? showInputError(passwordNameError, "Please check you password!") : showInputError(passwordNameError, "");
+    let nameValid = user === false ? showInputError(userNameError, "Please check you user name!") : showInputError(userNameError, "");
+    let passwordValid = password === false ? showInputError(passwordNameError, "Please check you password!") : showInputError(passwordNameError, "");
     if(nameValid && passwordValid){
-        userLogin();
+        // userLogin();
+        // alert("")
+        console.log("Your login success");
     }else{
         alert("login fail")
+        
     }
 }
 
@@ -68,20 +71,32 @@ function createUser(name, useremail, userpassword){
 // get all user data from MongoDB
 function userLogin(){
     let Name = document.querySelector(".login-username").value;
+    console.log(Name);
     let Password = document.querySelector(".login-user-password").value;
-    let condition = false;
+    console.log(Password);
+    let userCorrect = false;
+    let passwordCorrect = false;
     axios.get("/users").then((resporn)=>{
         let allUser = resporn.data
-        console.log(allUser);
+        // console.log(allUser);
         for(i=0; i<allUser.length; i++){
-            console.log(allUser[i]);
-            if(allUser[i].username==Name && allUser[i].password==Password){
-                condition = true;
+            // console.log(allUser[i].username);
+            // console.log(allUser[i].password);
+            if(allUser[i].username==Name){
+                console.log(allUser[i]);
+                userCorrect = true;
+            }
+            if(allUser[i].password==Password){
+                console.log(allUser[i]);
+                passwordCorrect = true;
             }
         }
-        if(condition){
-            alert("login Success");
-            console.log("login Success");   
+        // console.log(condition);
+        if(userCorrect && passwordCorrect){
+            // alert("login Success");
+            location.replace("http://localhost/views/home/home.html?id="+Password) 
+        }else{
+            loginDataValidation(userCorrect, passwordCorrect)
         }
     })
 }
