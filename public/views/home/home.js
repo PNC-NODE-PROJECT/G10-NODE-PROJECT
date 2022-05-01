@@ -1,13 +1,14 @@
-
-
+// TO DISPLAY ALL LIST OF QUIZZES
 function displayQuiz() {
+
     let homeContainer = document.createElement("div");
     homeContainer.className = "home-container row justify-content-center";
     container.appendChild(homeContainer);
     
     axios.get("/titles").then((result) => {
-        console.log(result.data)
+
         let titles = result.data;
+
         for (let title of titles) {
 
             let eachQuiz = document.createElement("div");
@@ -30,12 +31,13 @@ function displayQuiz() {
             footerLeft.className = "left";
             cardFooter.appendChild(footerLeft);
 
-            let btnPlay = document.createElement("button");
+            let btnPlay = document.createElement("a");
             btnPlay.className = "btn bg-success";
             btnPlay.textContent = "Play";
             btnPlay.id = title._id;
+            btnPlay.href = "../display_quiz/display_quiz.html";
             footerLeft.appendChild(btnPlay);
-            // btnPlay.addEventListener("click", play);
+            btnPlay.addEventListener("click", play);
 
             let footerRight = document.createElement("div");
             footerRight.className = "right d-flex align-items-center";
@@ -53,6 +55,20 @@ function displayQuiz() {
     })
 }
 
+// TO SAVE ALL QUESTIONS OF QUIZ TO LOCALSTORAGE
+function play(event) {
+    let quiz = event.target.id;
+    axios.get("/questions/" + quiz).then((result) => {
+        let data = result.data;
+        saveData(data);
+    }) 
+}
+
+
+// CREATE FUNCTION TO SAVE DATA TO LOCALSTORAGE
+function saveData(data) {
+    localStorage.setItem('quizdatas', JSON.stringify(data));
+}
 
 let container = document.querySelector(".main-container");
 displayQuiz();

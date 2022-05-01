@@ -75,10 +75,5 @@ router.put("/", (req, res) => {
     })
 })
 
-router.get("/q", (req, res) => {
-    questionModel.find()
-    .then((result) => {
-        res.send(result);
-    })
-})
+
 module.exports = router;
