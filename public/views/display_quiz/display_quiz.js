@@ -82,10 +82,85 @@ function displayQuest() {
     btnSubmit.type = "Submit";
     btnSubmit.id = datas[0].idOfQ
     quizBlock.appendChild(btnSubmit);
-    // btnSubmit.addEventListener("click", displayResult);
+    btnSubmit.addEventListener("click", displayResult);
     
 }
 
+function displayResult(event) {
+    let titleID = event.target.id;
+    getUserAnswer(titleID);
+    countScore(titleID);
+    
+}
+
+// TO GET THE ANSWER OF THE USER AND STORE IT IN LOCALSTORAGE
+function getUserAnswer(id) {
+
+    axios.get("/questions/" + id).then((result) => {
+        let userChose = [];
+        let datas = result.data;
+        for (let data of datas) {
+            let choseAnswer = document.getElementsByName(data._id);
+            let answerOfeach = [];
+            for (let i=0; i<choseAnswer.length; i++) {
+                if (choseAnswer[i].checked) {
+                    answerOfeach.push(i);
+                }
+            }
+            userChose.push(answerOfeach);
+        }
+
+        localStorage.setItem('useranswers', JSON.stringify(userChose));
+
+    })
+}
+
+// TO COMPUTE THE SCORE OF ALL QUESTION AND COUNT SCORE OF USER
+function countScore(id) {
+    axios.get("/questions/" + id).then((result) => {
+        let totals = [];
+        let totalScore = 0;
+        let totalUserScore = 0;
+        let scoreOfEachQuestion = [];
+        let datas = result.data;
+        let userAnswers = JSON.parse(localStorage.getItem('useranswers'));
+        for (let i=0; i<datas.length; i++) {
+            let data = datas[i];
+            totalScore += data.score;
+            if (data.typeOfQ == "checkbox") {
+                if (data.correctA.length == userAnswers[i].length) {
+                    let correct = true;
+                    for (let j=0; j<data.correctA.length; j++) {
+                        if (data.correctA[j] != userAnswers[i][j]) {
+                            correct = false;
+                        }
+                    }
+                    if (correct) {
+                        totalUserScore += data.score;
+                        scoreOfEachQuestion.push(data.score);
+                    }else {
+                        scoreOfEachQuestion.push(0);
+                    }
+                }else {
+                    scoreOfEachQuestion.push(0);
+                    
+                }
+            }else {
+                if (data.correctA[0] == userAnswers[i][0]) {
+                    totalUserScore += data.score;
+                    scoreOfEachQuestion.push(data.score);
+                }else {
+                    scoreOfEachQuestion.push(0)
+                }
+            }
+        }
+        totals.push(totalUserScore);
+        totals.push(totalScore);
+        totals.push(scoreOfEachQuestion);
+
+        localStorage.setItem('totalscore', JSON.stringify(totals));
+    })
+}
 
 
 let container = document.querySelector(".main-container");
