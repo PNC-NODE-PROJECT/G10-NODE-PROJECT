@@ -49,6 +49,8 @@ function displayQuiz() {
             
             let iDelete = document.createElement("i");
             iDelete.className = "fa fa-trash text-danger icons";
+            iDelete.id = title._id;
+            iDelete.addEventListener("click", deleteQuiz);
             footerRight.appendChild(iDelete);
 
         }
@@ -68,6 +70,23 @@ function play(event) {
 // CREATE FUNCTION TO SAVE DATA TO LOCALSTORAGE
 function saveData(data) {
     localStorage.setItem('quizdatas', JSON.stringify(data));
+}
+
+// TO DELETE QUIZ
+function deleteQuiz(event) {
+    let id = event.target.id;
+    if (confirm("Are you sure to go back home?") == true) {
+        axios.delete("/titles/"+id).then((result) => {
+            console.log(result);
+        })
+        axios.delete("/questions/delete/" + id).then((result) => {
+            console.log(result);
+        })
+        let dorm = document.querySelector(".home-container");
+        dorm.remove();
+        displayQuiz();
+    }
+
 }
 
 let container = document.querySelector(".main-container");
