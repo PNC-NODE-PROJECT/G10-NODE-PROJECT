@@ -127,6 +127,7 @@ function showEditeTitle(){
 //================= Add data title ==================
 function addTitleToMongDB(){
     // let quizTitle = document.getElementsByClassName('quiz-title');
+    let playerID = new URLSearchParams(window.location.search).get("id");
     let addTitle = document.querySelector('.title-input');
     let showBtnEditeTitle = document.querySelector('.button-edite-title');
     let hideBtnCreateTitle = document.querySelector('.button-add-title');
@@ -134,9 +135,9 @@ function addTitleToMongDB(){
     let title = document.createElement('h2');
     title.className="quiz-title";
     if(addTitle.value.length>0){
-        data = {title: addTitle.value};
+        data = {title: addTitle.value,playerID: playerID};
     }else{
-        data = {title: "Untitle"};
+        data = {title: "Untitle",playerID: playerID};
     }
     axios.post("/titles", data).then((response) => {
         let result = response.data;
@@ -310,10 +311,11 @@ function deleteQuestion(e){
 
 //========== show data question for edite ============
 function showDataToUpdate(e){
+    console.log("Hello world how are you?");         
     showEditeQuestion();
     let id = e.target.parentNode.parentNode.parentNode.id;
+    console.log(id);         
     questionID.push(id);
-    console.log(id);
     axios.get("/questions/"+id).then((resporn)=>{
         let result = resporn.data[0];
         console.log(result);
@@ -321,7 +323,9 @@ function showDataToUpdate(e){
         document.querySelector('.types-edite').value = result.typeOfQ;
         document.querySelector('.scores-edite').value = result.score;
         let allAnswer = document.querySelectorAll('.answer-edite');
+        console.log(allAnswer);
         let correction = document.getElementsByName('correction');
+        console.log(correction);
         document.getElementsByClassName("left-edite").id = id;
         for (i=0; i<4; i++){
             allAnswer[i].value = result.answers[i];
@@ -330,7 +334,7 @@ function showDataToUpdate(e){
             for (index=0; index<4; index++){
                 if(i == result.correctA[index]){
                     correction[i].checked = true;
-                    console.log("ello world");
+                    // console.log("ello world");
                 }
             }
         }
@@ -395,6 +399,13 @@ function concelTask(){
     axios.delete("/titles/"+id).then((resporn)=>{
         alert("delete title success")
     })
-    location.replace("http://localhost/")
+    // location.replace("http://localhost/")
+    let Password = new URLSearchParams(window.location.search).get("id")
+    location.replace("http://localhost/views/home/home.html?id="+Password)
 }
 console.log(document.querySelector("body"));
+
+function saveQuiz(){
+    let Password = new URLSearchParams(window.location.search).get("id")
+    location.replace("http://localhost/views/home/home.html?id="+Password)
+}

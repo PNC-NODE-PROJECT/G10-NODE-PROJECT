@@ -14,6 +14,10 @@ const quizSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
+    },
+    playerID: {
+        type:String,
+        required: true
     }
 });
 const questionSchema = new mongoose.Schema({
