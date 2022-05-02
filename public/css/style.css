@@ -451,6 +451,12 @@ hr {
 .icons {
     margin-left: 10px;
     font-size: 30px;
+    color: #de2f2f;
+}
+
+.icons:hover {
+    cursor: pointer;
+    color: #ae0303;
 }
 
 .block-score, .divTitleQuiz {

@@ -21,7 +21,7 @@ function displayQuiz() {
                     cardHeader.className = "card-header";
                     eachQuiz.appendChild(cardHeader);
                 
-                    let titleQuiz = document.createElement("h1");
+                    let titleQuiz = document.createElement("h2");
                     titleQuiz.textContent = title.title;
                     cardHeader.appendChild(titleQuiz);
         
@@ -46,11 +46,11 @@ function displayQuiz() {
                     cardFooter.appendChild(footerRight);
         
                     let iEdit = document.createElement("i");
-                    iEdit.className = "fa fa-edit text-danger icons";
+                    iEdit.className = "fa fa-edit icons";
                     footerRight.appendChild(iEdit);
                     
                     let iDelete = document.createElement("i");
-                    iDelete.className = "fa fa-trash text-danger icons";
+                    iDelete.className = "fa fa-trash icons";
                     iDelete.id = title._id;
                     iDelete.addEventListener("click", deleteQuiz);
                     footerRight.appendChild(iDelete);
@@ -66,10 +66,10 @@ function play(event) {
     let quiz = event.target.id;
     axios.get("/questions/" + quiz).then((result) => {
         let data = result.data;
-        console.log(data);
         saveData(data);
     }) 
 }
+
 
 
 // CREATE FUNCTION TO SAVE DATA TO LOCALSTORAGE
@@ -93,6 +93,7 @@ function deleteQuiz(event) {
     }
 
 }
+
 
 let container = document.querySelector(".main-container");
 displayQuiz();

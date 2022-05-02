@@ -97,7 +97,7 @@ function displayQuest() {
 
         let linkBack = document.createElement("a");
         linkBack.className = "btn link-back";
-        linkBack.href = "../home/home.html";
+        linkBack.href = "../home/home.html?id=theavy";
         linkBack.textContent = "Back";
         back.appendChild(linkBack);
     }
@@ -124,6 +124,9 @@ function getUserAnswer(id) {
                 if (choseAnswer[i].checked) {
                     answerOfeach.push(i);
                 }
+            }
+            if (answerOfeach.length == 0) {
+                answerOfeach.push(-1);
             }
             userChose.push(answerOfeach);
         }

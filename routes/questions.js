@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
 
 // get questions
 router.get("/:quizId", (req, res) => {
-    questionModel.find({_id: req.params.quizId})
+    questionModel.find({idOfQ: req.params.quizId})
     .then((result) => { 
         res.send(result)
     })

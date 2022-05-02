@@ -122,6 +122,13 @@ function correctionQuiz() {
         } 
         index += 1;
     }
+
+    let linkBack = document.createElement("a");
+    linkBack.className = "btn link-back";
+    linkBack.href = "../home/home.html?id=theavy";
+    linkBack.textContent = "Back";
+    blockResult.appendChild(linkBack);
+
 }
 
 let container = document.querySelector(".main-container");
