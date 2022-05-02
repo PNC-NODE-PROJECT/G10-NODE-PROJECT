@@ -20,7 +20,18 @@ router.post("/", (req, res) => {
 
 // get questions
 router.get("/:quizId", (req, res) => {
-    questionModel.find({_id: req.params.quizId})
+    questionModel.find({idOfQ: req.params.quizId})
+    .then((result) => { 
+        res.send(result)
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})
+
+// get question
+router.get("/question/:questionId", (req, res) => {
+    questionModel.find({_id: req.params.questionId})
     .then((result) => { 
         res.send(result)
     })

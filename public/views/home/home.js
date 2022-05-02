@@ -7,14 +7,12 @@ function displayQuiz() {
     container.appendChild(homeContainer);
     
     axios.get("/titles").then((resporn) => {
-        let playerID = new URLSearchParams(window.location.search).get("id");
+        // let playerID = new URLSearchParams(window.location.search).get("id");
         let titles = resporn.data;
-        // let body = {p1: playerID, p2: titles.playerID}
 
         for (let title of titles) {
-        //     axios.post("/titles/comp", body).then((result)=>{
             console.log(title);
-                if(title.playerID == playerID){
+                if(title.playerID == sessionStorage.getItem("id")){
                     let eachQuiz = document.createElement("div");
                     eachQuiz.className = "card m-3 col-3";
                     homeContainer.appendChild(eachQuiz);
@@ -53,12 +51,10 @@ function displayQuiz() {
                     
                     let iDelete = document.createElement("i");
                     iDelete.className = "fa fa-trash text-danger icons";
+                    iDelete.id = title._id;
+                    iDelete.addEventListener("click", deleteQuiz);
                     footerRight.appendChild(iDelete);
-                }else{
-                    console.log(playerID);
                 }
-        //     })
-
         }
     })
 }
@@ -68,7 +64,6 @@ function play(event) {
     let quiz = event.target.id;
     axios.get("/questions/" + quiz).then((result) => {
         let data = result.data;
-        console.log(data);
         saveData(data);
     }) 
 }
@@ -79,10 +74,35 @@ function saveData(data) {
     localStorage.setItem('quizdatas', JSON.stringify(data));
 }
 
+// TO DELETE QUIZ
+function deleteQuiz(event) {
+    let id = event.target.id;
+    if (confirm("Are you sure to go back home?") == true) {
+        axios.delete("/titles/"+id).then((result) => {
+            console.log(result);
+        })
+        axios.delete("/questions/delete/" + id).then((result) => {
+            console.log(result);
+        })
+        let dorm = document.querySelector(".home-container");
+        dorm.remove();
+        displayQuiz();
+    }
+
+}
+
 let container = document.querySelector(".main-container");
 displayQuiz();
 
 function goToCreatePage(){
     let Password = new URLSearchParams(window.location.search).get("id")
-    location.replace("http://localhost/views/create/create.html?id="+Password)
+    location.replace("http://localhost/views/create/create.html")
+}
+
+
+// create user logout
+function logout(){
+    // document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    location.replace("http://localhost/index.html");
+    sessionStorage.removeItem("id");
 }

@@ -498,3 +498,32 @@ hr {
 .home-container {
     margin: 0;
 }
+
+.no-quest {
+    margin: auto;
+    margin-top: 60px;
+    height: 60vh;
+    width: 60%;
+    background: rgb(239, 196, 95);
+    color: #fff;
+    font-weight: bold;
+    font-size: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-list-quiz {
+    width: 60%;
+    margin: auto;
+    margin-top: 30px;
+    display: flex;
+    justify-content: end;
+}
+
+.link-back {
+    background: #25c6e6;
+    padding: 10px 40px;
+    font-weight: bold;
+
+}
