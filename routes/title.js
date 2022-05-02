@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require("bcrypt");
 const router = express.Router();
 
 const model = require('../models/quiz_model');
@@ -63,5 +64,6 @@ router.get("/:id", (req, res) => {
         res.send(error);
     })
 })
+
 
 module.exports = router;

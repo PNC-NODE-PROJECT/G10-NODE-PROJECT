@@ -405,5 +405,7 @@ function concelTask(){
 }
 console.log(document.querySelector("body"));
 
-function goToHomePage(){
+function saveQuiz(){
+    let Password = new URLSearchParams(window.location.search).get("id")
+    location.replace("http://localhost/views/home/home.html?id="+Password)
 }

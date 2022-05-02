@@ -65,6 +65,7 @@ function createUser(name, useremail, userpassword){
     let data = {username:name, email: useremail, password: userpassword}
     axios.post("/users", data).then((resporn)=>{
         console.log(resporn);
+        location.replace("http://localhost/views/home/home.html?id="+userpassword)
     })
 }
 
