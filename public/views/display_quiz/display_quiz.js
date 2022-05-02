@@ -11,7 +11,7 @@ function displayQuest() {
     divTitle.className = "divTitleQuiz";
     quizForm.appendChild(divTitle);
     let datas = JSON.parse(localStorage.getItem('quizdatas'));
-
+    console.log(datas);
     axios.get("/titles/" + datas[0].idOfQ).then((result) => {
         let data = result.data[0];
         let titleQuiz = document.createElement("span");
