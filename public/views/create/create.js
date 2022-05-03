@@ -1,6 +1,10 @@
 //====================== data =============================
 let questionID = [];
 let titleID = [];
+let questionEdit = [];
+let questionCreate = [];
+let questionDelete = []
+let titleEdit = {};
 
 // display when data input validation is not correct
 function showInputError(input, errorInput){
@@ -11,6 +15,7 @@ function showInputError(input, errorInput){
         return false;
     }
 }
+
 // =============== data validation ========================
 // validation create question
 function checkAllInput(){
@@ -81,8 +86,6 @@ function checkAllEditInput(){
     
 }
 
-
-
 // ================ Change Option Answers ==================
 function optionAnswers(){
     let options = document.querySelector('#list').value;
@@ -102,21 +105,25 @@ function modalOptionAnswers(){
     }
 }
 
+// hide the place for edit question
 function hideEditeQuestion(){
     let hideEditeQuestion = document.querySelector("#questions-edite");
     hideEditeQuestion.style.display = "none";
 }
 
+// show the place for edite question
 function showEditeQuestion(){
     let hideEditeQuestion = document.querySelector("#questions-edite");
     hideEditeQuestion.style.display = "block";
 }
 
+// hide the place for edit title quiz
 function hideEditeTitle(){
     let hideEditeQuestion = document.querySelector("#title-edite");
     hideEditeQuestion.style.display = "none";
 }
 
+// Show the place for edit title quiz
 function showEditeTitle(){
     let hideEditeQuestion = document.querySelector("#title-edite");
     hideEditeQuestion.style.display = "block";
@@ -154,10 +161,12 @@ function editeTitleToMongDB(){
     let addTitle = document.querySelector('.title-input');
     let title = document.querySelector('.quiz-title');
     let contentTitle = document.querySelector(".title-quiz");
+    console.log(contentTitle);
+    console.log(contentTitle.childNodes[1]);
     if(addTitle.value.length>0){
-        data = {id: contentTitle.childNodes[5].id, title: addTitle.value};
+        data = {id: contentTitle.childNodes[1].id, title: addTitle.value};
     }else{
-        data = {id: contentTitle.childNodes[5].id, title: "Untitle"};  
+        data = {id: contentTitle.childNodes[1].id, title: "Untitle"};  
     }
 
     axios.put("/titles", data).then((response) => {
@@ -198,12 +207,13 @@ function addQuestionToMongoDB(){
 
     data['typeOfQ'] = type.value;
 
-    data['idOfQ'] = contentTitle.childNodes[5].id;
+    data['idOfQ'] = contentTitle.childNodes[1].id;
     
-    // console.log(data);
+    console.log(contentTitle.childNodes[1].id);
 
     axios.post("/questions", data).then((resporn)=>{
         let result = resporn.data;
+        questionCreate.push(result._id)
 
         let containShowQuiz = document.querySelector('.show-quizs');
 
@@ -228,7 +238,6 @@ function addQuestionToMongoDB(){
                 for (index=0; index<result.correctA.length; index++){
                     if (i == result.correctA[index]){
                         option.className='correct';
-                        console.log("Can add class");
                     }
                 }
                 containEachAnswer.appendChild(option);
@@ -251,6 +260,7 @@ function addQuestionToMongoDB(){
             let group_update = document.createElement('div');
             group_update.className="update-question";
             
+            // create button delete while create
             let delete_question = document.createElement('button');
             delete_question.className = "btn";
             delete_question.id = "delete";
@@ -258,12 +268,12 @@ function addQuestionToMongoDB(){
             delete_question.textContent = "DELETE";
             group_update.appendChild(delete_question);
             
+            // create button edit while create quiz 
             let edite_question = document.createElement('button');
             edite_question.className = "btn";
             edite_question.id = "edite";
             edite_question.addEventListener("click", showDataToUpdate);
             edite_question.textContent = "EDITE";
-            // edite_question.onclick(deleteQuestion());
             group_update.appendChild(edite_question);
             
             container.appendChild(group_update);
@@ -286,10 +296,15 @@ function deleteQuestion(e){
     let contentParent = document.querySelector(".show-quizs");
     let pare = e.target;
     let taskToDelete = pare.parentNode.parentNode.parentNode;
-    axios.delete("/questions/"+taskToDelete.id).then((result)=>{
-        console.log(result.data);
-    });
-    contentParent.removeChild(taskToDelete);
+    axios.get("/questions/question/"+taskToDelete.id).then((resporn)=>{
+        console.log(resporn.data[0]);
+        questionDelete.push(resporn.data[0])
+        axios.delete("/questions/"+taskToDelete.id).then((result)=>{
+            console.log(result.data);
+        });
+        contentParent.removeChild(taskToDelete);
+    })
+    console.log(questionDelete);
 }
 
 //========== show data question for edite ============
@@ -299,6 +314,7 @@ function showDataToUpdate(e){
     questionID.push(id);
     axios.get("/questions/question/"+id).then((resporn)=>{
         let result = resporn.data[0];
+        questionEdit.push(result);
         document.querySelector('.question-edite').value = result.question;
         document.querySelector('.types-edite').value = result.typeOfQ;
         document.querySelector('.scores-edite').value = result.score;
@@ -318,6 +334,7 @@ function showDataToUpdate(e){
     })
 }
 
+// ========= Edit Question while create ==============
 function editeQuestionInMongDB(){
     let question = document.querySelector('.question-edite').value;
     let type = document.querySelector('.types-edite').value;
@@ -338,6 +355,7 @@ function editeQuestionInMongDB(){
 
         axios.put("/questions", data).then((result)=>{
             hideEditeQuestion()
+            console.log(result);
             let resporn = result.config.data;
             let dataResporn = JSON.parse(resporn);
             let parent = document.getElementById(questionID[0].toString());
@@ -347,17 +365,18 @@ function editeQuestionInMongDB(){
                 parent.childNodes[i].childNodes[0].className = "";
             }
             for(i=0; i<dataResporn.correctA.length; i++){
-                parent.childNodes[dataResporn.correctA[i]].childNodes[0].className = "correct";
+                parent.childNodes[dataResporn.correctA[i]+1].childNodes[0].className = "correct";
             }
-            parent.childNodes[5].childNodes[0].textContent = dataResporn.score;
+            console.log(parent);
+            parent.childNodes[1].childNodes[0].textContent ="Score : " + dataResporn.score;
 
         })
 }
 
-// Concel create tasks
+// Concel create tasks create
 function concelTask(){
     let contentTitle = document.querySelector(".title-quiz");
-    let id = contentTitle.childNodes[5].id;
+    let id = contentTitle.childNodes[1].id;
     axios.delete("/questions/delete/"+id).then((resporn)=>{
         console.log("delete quez success");
     })
@@ -366,6 +385,182 @@ function concelTask(){
     })
     location.replace("http://localhost/views/home/home.html")
 }
+
+// for save the quiz create
 function saveQuiz(){
     location.replace("http://localhost/views/home/home.html")
+}
+
+
+
+
+
+// ================================================================
+//                       User for Edite quiz
+// ================================================================
+// for edit quiz
+let condition = document.querySelector(".title-input").value;
+if (new URLSearchParams(window.location.search).get("qId").length>0 && condition.length<1){
+    // Button to concel Quiz Edit
+    document.querySelector(".button-concel").style.display="none";
+    document.querySelector(".button-concell-edite-quiz").style.display="flex";
+
+    let showBtnEditeTitle = document.querySelector('.button-edite-title');
+    let hideBtnCreateTitle = document.querySelector('.button-add-title');
+
+    showBtnEditeTitle.style.display = "flex";
+    hideBtnCreateTitle.style.display = "none";
+
+    showDataForEdit();
+}
+
+// show all data of Quiz for edit
+function showDataForEdit(){
+    // show the title for edite
+    let titleID = new URLSearchParams(window.location.search).get("qId");
+    let contentTitle = document.querySelector(".title-quiz");
+    // let showBtnEditeTitle = document.querySelector('.button-edite-title');
+    // let hideBtnCreateTitle = document.querySelector('.button-add-title');
+    contentTitle.id =titleID;
+    axios.get("/titles/"+titleID).then((resporn)=>{
+
+        let title = document.createElement('h2');
+        title.className="quiz-title";
+        title.id=titleID;
+        title.textContent=resporn.data[0].title;
+        titleEdit["id"] = titleID;
+        titleEdit["title"] = resporn.data[0].title;
+        console.log(titleEdit);
+        contentTitle.appendChild(title);
+
+        document.querySelector(".title-input").value = resporn.data[0].title;
+        // showBtnEditeTitle.style.display = "block";
+        // hideBtnCreateTitle.style.display = "none";
+    })
+    // for edit question
+    axios.get("/questions/"+titleID).then((resporns)=>{
+        let results = resporns.data;
+        // console.log(results);
+        let containShowQuiz = document.querySelector('.show-quizs');
+        for (n=0; n<results.length; n++){
+            let result = results[n];
+            // console.log(n);
+            // console.log(result);
+
+
+            let containEachQuiz = document.createElement('div');
+                containEachQuiz.className='contain-each-question';
+                containEachQuiz.id=result._id;
+                
+                let question = document.createElement('div');
+                question.className='questions';
+                question.textContent = result.question;
+                containEachQuiz.appendChild(question);
+        
+                for (i=0; i<4; i++){
+                    let containAnswers = document.createElement('div');
+                    containAnswers.className='contain-answers';
+                    // contian each answers ============================
+                    let containEachAnswer = document.createElement('div');
+                    containEachAnswer.className='contain-each-answer';
+                    // contain answers option===========
+                    let option = document.createElement('li');
+                    for (index=0; index<result.correctA.length; index++){
+                        if (i == result.correctA[index]){
+                            option.className='correct';
+                            // console.log("Can add class");
+                        }
+                    }
+                    containEachAnswer.appendChild(option);
+                    // contain answers =================
+                    let containAnswer = document.createElement('div');
+                    containAnswer.className = 'contain-answer';
+                    containAnswer.textContent = result.answers[i];
+                    containEachAnswer.appendChild(containAnswer);
+                    containEachQuiz.appendChild(containEachAnswer);
+                }
+                // score update delete
+                let container = document.createElement('div');
+                container.className="question-buttom"
+                
+                let score = document.createElement('p');
+                score.className = "score";
+                score.textContent = "Score : " + result.score;
+                container.appendChild(score);
+                
+                let group_update = document.createElement('div');
+                group_update.className="update-question";
+                
+                let delete_question = document.createElement('button');
+                delete_question.className = "btn";
+                delete_question.id = "delete";
+                delete_question.addEventListener("click", deleteQuestion);
+                delete_question.textContent = "DELETE";
+                group_update.appendChild(delete_question);
+                
+                let edite_question = document.createElement('button');
+                edite_question.className = "btn";
+                edite_question.id = "edite";
+                edite_question.addEventListener("click", showDataToUpdate);
+                edite_question.textContent = "EDITE";
+                group_update.appendChild(edite_question);
+                
+                container.appendChild(group_update);
+                containEachQuiz.appendChild(container);
+                
+                
+            containShowQuiz.appendChild(containEachQuiz);
+
+        }
+        // console.log(containShowQuiz);
+    })
+}
+
+// Concel create tasks Edit
+function concelTaskEdit(){
+    // restore title when we Edit ====================================================
+    axios.put("/titles", titleEdit).then((response) => {
+        console.log("Edit Title Success");
+    })
+
+    // restore all question that delete while edite ===================================
+    for (index=0; index<questionDelete.length; index++){
+        let data = questionDelete[index]
+        axios.post("/questions", data).then((resporn)=>{
+            console.log(resporn);
+        })
+    }
+
+    // restore all question that edite while edite =====================================
+    for (index=0; index<questionEdit.length; index++){
+        let data = {id: questionEdit[index]._id, question: questionEdit[index].question, answers: questionEdit[index].answers, correctA: questionEdit[index].correctA, score:questionEdit[index].score, typeOfQ:questionEdit[index].typeOfQ};
+
+        axios.put("/questions", data).then((result)=>{
+            console.log(result);
+        })
+    }
+
+    // delete all question that create while edite ======================================
+    for (i=0; i<questionCreate.length; i++){
+        let data = questionCreate[i]
+        console.log(data);
+        axios.delete("/questions/"+ data).then((response) => {
+            console.log("Edit Question Success");
+        })
+    }
+
+    location.replace("http://localhost/views/home/home.html");
+    titleEdit={};
+    questionEdit=[];
+    questionCreate=[];
+    questionDelete = [];
+    // Button to concel Quiz Edit
+    document.querySelector(".button-concel").style.display="flex";
+    document.querySelector(".button-concell-edite-quiz").style.display="none";
+}
+// ================================================================
+//                      session storage empty
+// ================================================================
+if(sessionStorage.getItem("id")==null){
+    location.replace("http://localhost/index.html")
 }

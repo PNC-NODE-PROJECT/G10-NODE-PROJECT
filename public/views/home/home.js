@@ -11,7 +11,6 @@ function displayQuiz() {
         let titles = resporn.data;
 
         for (let title of titles) {
-            console.log(title);
                 if(title.playerID == sessionStorage.getItem("id")){
                     let eachQuiz = document.createElement("div");
                     eachQuiz.className = "card m-3 col-3";
@@ -47,6 +46,8 @@ function displayQuiz() {
         
                     let iEdit = document.createElement("i");
                     iEdit.className = "fa fa-edit text-danger icons";
+                    iEdit.id = title._id;
+                    iEdit.addEventListener("click", editQuiz);
                     footerRight.appendChild(iEdit);
                     
                     let iDelete = document.createElement("i");
@@ -57,6 +58,7 @@ function displayQuiz() {
                 }
         }
     })
+    console.log(homeContainer);
 }
 
 // TO SAVE ALL QUESTIONS OF QUIZ TO LOCALSTORAGE
@@ -91,18 +93,32 @@ function deleteQuiz(event) {
 
 }
 
+// TO EDIT QUIZ
+function editQuiz(event) {
+    let id = event.target.id;
+    location.replace("http://localhost/views/create/create.html?qId="+id)
+
+}
+
 let container = document.querySelector(".main-container");
 displayQuiz();
 
 function goToCreatePage(){
-    let Password = new URLSearchParams(window.location.search).get("id")
     location.replace("http://localhost/views/create/create.html")
 }
 
 
 // create user logout
 function logout(){
-    // document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     location.replace("http://localhost/index.html");
     sessionStorage.removeItem("id");
+}
+
+
+
+// ================================================================
+//                      session storage empty
+// ================================================================
+if(sessionStorage.getItem("id")==null){
+    location.replace("http://localhost/index.html")
 }

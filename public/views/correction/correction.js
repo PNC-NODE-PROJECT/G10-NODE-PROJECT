@@ -126,3 +126,11 @@ function correctionQuiz() {
 
 let container = document.querySelector(".main-container");
 correctionQuiz();
+
+
+// ================================================================
+//                      session storage empty
+// ================================================================
+if(sessionStorage.getItem("id")==null){
+    location.replace("http://localhost/index.html")
+}
