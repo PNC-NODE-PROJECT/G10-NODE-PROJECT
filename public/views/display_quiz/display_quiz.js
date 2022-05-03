@@ -185,3 +185,12 @@ function countScore(id) {
 
 let container = document.querySelector(".main-container");
 displayQuest();
+
+
+
+// ================================================================
+//                      session storage empty
+// ================================================================
+if(sessionStorage.getItem("id")==null){
+    location.replace("http://localhost/index.html")
+}

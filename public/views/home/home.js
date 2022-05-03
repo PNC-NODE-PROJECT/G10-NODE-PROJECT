@@ -15,49 +15,51 @@ function displayQuiz() {
         let titles = resporn.data;
 
         for (let title of titles) {
-            if(title.playerID == sessionStorage.getItem("id")){
-                let eachQuiz = document.createElement("div");
-                eachQuiz.className = "card m-3 col-3";
-                homeContainer.appendChild(eachQuiz);
-    
-                let cardHeader = document.createElement("div");
-                cardHeader.className = "card-header";
-                eachQuiz.appendChild(cardHeader);
-            
-                let titleQuiz = document.createElement("h2");
-                titleQuiz.textContent = title.title;
-                cardHeader.appendChild(titleQuiz);
-    
-                let cardFooter = document.createElement("div");
-                cardFooter.className = "card-footer d-flex justify-content-between";
-                eachQuiz.appendChild(cardFooter);
-    
-                let footerLeft = document.createElement("div");
-                footerLeft.className = "left";
-                cardFooter.appendChild(footerLeft);
-    
-                let btnPlay = document.createElement("a");
-                btnPlay.className = "btn bg-success";
-                btnPlay.textContent = "Play";
-                btnPlay.id = title._id;
-                btnPlay.href = "../display_quiz/display_quiz.html";
-                footerLeft.appendChild(btnPlay);
-                btnPlay.addEventListener("click", play);
-    
-                let footerRight = document.createElement("div");
-                footerRight.className = "right d-flex align-items-center";
-                cardFooter.appendChild(footerRight);
-    
-                let iEdit = document.createElement("i");
-                iEdit.className = "fa fa-edit icons";
-                footerRight.appendChild(iEdit);
+                if(title.playerID == sessionStorage.getItem("id")){
+                    let eachQuiz = document.createElement("div");
+                    eachQuiz.className = "card m-3 col-3";
+                    homeContainer.appendChild(eachQuiz);
+        
+                    let cardHeader = document.createElement("div");
+                    cardHeader.className = "card-header";
+                    eachQuiz.appendChild(cardHeader);
                 
-                let iDelete = document.createElement("i");
-                iDelete.className = "fa fa-trash icons";
-                iDelete.id = title._id;
-                iDelete.addEventListener("click", deleteQuiz);
-                footerRight.appendChild(iDelete);
-            }
+                    let titleQuiz = document.createElement("h1");
+                    titleQuiz.textContent = title.title;
+                    cardHeader.appendChild(titleQuiz);
+        
+                    let cardFooter = document.createElement("div");
+                    cardFooter.className = "card-footer d-flex justify-content-between";
+                    eachQuiz.appendChild(cardFooter);
+        
+                    let footerLeft = document.createElement("div");
+                    footerLeft.className = "left";
+                    cardFooter.appendChild(footerLeft);
+        
+                    let btnPlay = document.createElement("a");
+                    btnPlay.className = "btn bg-success";
+                    btnPlay.textContent = "Play";
+                    btnPlay.id = title._id;
+                    btnPlay.href = "../display_quiz/display_quiz.html";
+                    footerLeft.appendChild(btnPlay);
+                    btnPlay.addEventListener("click", play);
+        
+                    let footerRight = document.createElement("div");
+                    footerRight.className = "right d-flex align-items-center";
+                    cardFooter.appendChild(footerRight);
+        
+                    let iEdit = document.createElement("i");
+                    iEdit.className = "fa fa-edit text-danger icons";
+                    iEdit.id = title._id;
+                    iEdit.addEventListener("click", editQuiz);
+                    footerRight.appendChild(iEdit);
+                    
+                    let iDelete = document.createElement("i");
+                    iDelete.className = "fa fa-trash text-danger icons";
+                    iDelete.id = title._id;
+                    iDelete.addEventListener("click", deleteQuiz);
+                    footerRight.appendChild(iDelete);
+                }
         }
     })
 }
@@ -94,19 +96,32 @@ function deleteQuiz(event) {
 
 }
 
+// TO EDIT QUIZ
+function editQuiz(event) {
+    let id = event.target.id;
+    location.replace("http://localhost/views/create/create.html?qId="+id)
+
+}
 
 let container = document.querySelector(".main-container");
 displayQuiz();
 
 function goToCreatePage(){
-    let Password = new URLSearchParams(window.location.search).get("id")
     location.replace("http://localhost/views/create/create.html")
 }
 
 
 // create user logout
 function logout(){
-    // document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     location.replace("http://localhost/index.html");
     sessionStorage.removeItem("id");
+}
+
+
+
+// ================================================================
+//                      session storage empty
+// ================================================================
+if(sessionStorage.getItem("id")==null){
+    location.replace("http://localhost/index.html")
 }
