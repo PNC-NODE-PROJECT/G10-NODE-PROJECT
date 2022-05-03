@@ -1,4 +1,8 @@
 // TO DISPLAY THE LIST OF QUESTIONS OF THE QUIZ TO FOR USER TO DO
+function noBack()
+{
+    window.history.forward();
+}
 function displayQuest() {
     
     let datas = JSON.parse(localStorage.getItem('quizdatas'));
@@ -70,16 +74,10 @@ function displayQuest() {
                 answer.appendChild(labelAnswer);
                 idForLabel += 1;
             }
-    
-            if (data.typeOfQ == "radio") {
-                let toRequired = document.getElementsByName(data._id);
-                toRequired[0].required = "required";
-    
-            }
         
         }
         let btnSubmit = document.createElement("button");
-        btnSubmit.className = "btn bg-primary";
+        btnSubmit.className = "btn bg-primary btn-submit";
         btnSubmit.textContent = "Submit";
         btnSubmit.type = "Submit";
         btnSubmit.id = datas[0].idOfQ
@@ -106,10 +104,12 @@ function displayQuest() {
 
 function displayResult(event) {
     let titleID = event.target.id;
+    window.history.forward();
     getUserAnswer(titleID);
     countScore(titleID);
     
 }
+
 
 // TO GET THE ANSWER OF THE USER AND STORE IT IN LOCALSTORAGE
 function getUserAnswer(id) {
@@ -124,6 +124,9 @@ function getUserAnswer(id) {
                 if (choseAnswer[i].checked) {
                     answerOfeach.push(i);
                 }
+            }
+            if (answerOfeach.length == 0) {
+                answerOfeach.push(-1);
             }
             userChose.push(answerOfeach);
         }

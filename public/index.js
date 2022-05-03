@@ -1,3 +1,7 @@
+function noBack()
+{
+    window.history.forward();
+}
 function hidLogin(){
     document.querySelector("#login").style.display = "none";
     document.querySelector("#signup").style.display = "flex";
@@ -48,9 +52,11 @@ function showInputError(input, errorInput){
 
 // add data user create account into database
 function createUser(name, useremail, userpassword){
-    let data = {username:name, email: useremail, password: userpassword}
+    let data = {username:name, email: useremail, password: userpassword+name+useremail}
     axios.post("/users", data).then((resporn)=>{
         sessionStorage.setItem("id", userpassword);
+        sessionStorage.setItem("email", useremail);
+        sessionStorage.setItem("playerName", name);
         location.replace("http://localhost/views/home/home.html")
     })
 }
@@ -70,9 +76,13 @@ function userLogin(){
             if(allUser[i].password==Password){
                 passwordCorrect = true;
             }
+            if(userCorrect && passwordCorrect){
+                sessionStorage.setItem("email", allUser[i].email);
+            }
         }
         if(userCorrect && passwordCorrect){
             sessionStorage.setItem("id", Password);
+            sessionStorage.setItem("playerName", Name);
             location.replace("http://localhost/views/home/home.html") 
         }else{
             loginDataValidation(userCorrect, passwordCorrect)

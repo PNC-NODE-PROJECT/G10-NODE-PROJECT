@@ -1,5 +1,9 @@
 // TO DISPLAY ALL LIST OF QUIZZES
 // const bcrypt = require("bcrypt");
+function noBack()
+{
+    window.history.forward();
+}
 function displayQuiz() {
 
     let homeContainer = document.createElement("div");
@@ -58,7 +62,6 @@ function displayQuiz() {
                 }
         }
     })
-    console.log(homeContainer);
 }
 
 // TO SAVE ALL QUESTIONS OF QUIZ TO LOCALSTORAGE

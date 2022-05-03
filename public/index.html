@@ -8,8 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-
+<body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">
     <!--============================ First page ================================-->
     <div class="index-container" id="login">
         <div class="index-page">

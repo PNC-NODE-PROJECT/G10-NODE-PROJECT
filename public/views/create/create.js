@@ -1,4 +1,8 @@
 //====================== data =============================
+function noBack()
+{
+    window.history.forward();
+}
 let questionID = [];
 let titleID = [];
 let questionEdit = [];
@@ -235,8 +239,15 @@ function addQuestionToMongoDB(){
                 containEachAnswer.className='contain-each-answer';
                 // contain answers option===========
                 let option = document.createElement('li');
+                option.style.listStyleType = "circle";
+                if (result.typeOfQ == "checkbox") {
+                    option.style.listStyleType = "square";
+                }
                 for (index=0; index<result.correctA.length; index++){
                     if (i == result.correctA[index]){
+                        if (result.typeOfQ == "radio") {
+                            option.style.listStyleType = "disc";
+                        }
                         option.className='correct';
                     }
                 }
@@ -273,7 +284,8 @@ function addQuestionToMongoDB(){
             edite_question.className = "btn";
             edite_question.id = "edite";
             edite_question.addEventListener("click", showDataToUpdate);
-            edite_question.textContent = "EDITE";
+            edite_question.textContent = "EDIT";
+            // edite_question.onclick(deleteQuestion());
             group_update.appendChild(edite_question);
             
             container.appendChild(group_update);
@@ -329,6 +341,7 @@ function showDataToUpdate(e){
                 if(i == result.correctA[index]){
                     correction[i].checked = true;
                 }
+                correction[i].type = result.typeOfQ;
             }
         }
     })
@@ -368,7 +381,6 @@ function editeQuestionInMongDB(){
                 parent.childNodes[dataResporn.correctA[i]+1].childNodes[0].className = "correct";
             }
             console.log(parent);
-            console.log(parent.childNodes[4].childNodes[0]);
             parent.childNodes[5].childNodes[0].textContent ="Score : " + dataResporn.score;
 
         })
@@ -466,12 +478,19 @@ function showDataForEdit(){
                     containEachAnswer.className='contain-each-answer';
                     // contain answers option===========
                     let option = document.createElement('li');
+                    option.style.listStyleType = "circle";
+                    if (result.typeOfQ == "checkbox") {
+                        option.style.listStyleType = "square";
+                    }
                     for (index=0; index<result.correctA.length; index++){
                         if (i == result.correctA[index]){
+                            if (result.typeOfQ == "radio") {
+                                option.style.listStyleType = "disc";
+                            }
                             option.className='correct';
-                            // console.log("Can add class");
                         }
                     }
+
                     containEachAnswer.appendChild(option);
                     // contain answers =================
                     let containAnswer = document.createElement('div');
@@ -503,7 +522,7 @@ function showDataForEdit(){
                 edite_question.className = "btn";
                 edite_question.id = "edite";
                 edite_question.addEventListener("click", showDataToUpdate);
-                edite_question.textContent = "EDITE";
+                edite_question.textContent = "EDIT";
                 group_update.appendChild(edite_question);
                 
                 container.appendChild(group_update);

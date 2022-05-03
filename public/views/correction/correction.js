@@ -1,3 +1,7 @@
+function noBack()
+{
+    window.history.forward();
+}
 // TO SHOW THE RESULT OF QUIZ
 function correctionQuiz() {
 
@@ -122,10 +126,43 @@ function correctionQuiz() {
         } 
         index += 1;
     }
+
+    let divBtn = document.createElement("div");
+    divBtn.className = "div-btn";
+    blockResult.appendChild(divBtn);
+
+    let linkBack = document.createElement("a");
+    linkBack.className = "btn link-back";
+    linkBack.href = "../home/home.html";
+    linkBack.textContent = "Back";
+    divBtn.appendChild(linkBack);
+
+    let downloadPdf = document.createElement("a");
+    downloadPdf.className = "btn link-back download-pdf ";
+    downloadPdf.addEventListener("click",generatePDF);
+    downloadPdf.textContent = "Download PDF";
+    divBtn.appendChild(downloadPdf);
+    
+    let btnPlayAgain = document.createElement("a");
+    btnPlayAgain.className = "btn btn-play-again";
+    btnPlayAgain.href = "../display_quiz/display_quiz.html";
+    btnPlayAgain.textContent = "Play Again";
+    divBtn.appendChild(btnPlayAgain);
 }
 
 let container = document.querySelector(".main-container");
 correctionQuiz();
+
+// =================== Download PDF file =======================
+function generatePDF(){
+    html2pdf(document.body, {
+        margin:       [3, -40],
+        filename:     '.pdf',
+        image:        { type: 'jpeg', quality: 1.2 },
+        html2canvas:  { scale: 1, logging: true, dpi: 300, letterRendering: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      });
+}
 
 
 // ================================================================

@@ -4,7 +4,7 @@ var cors = require("cors");
 
 const app = express();
 
-app.use(cors()); // To allow any origin
+app.use(cors({origin: '*'}));
 
 app.use(express.urlencoded());
 app.use(express.json()); // To read json data in request body
