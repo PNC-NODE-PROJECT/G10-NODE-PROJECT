@@ -368,7 +368,8 @@ function editeQuestionInMongDB(){
                 parent.childNodes[dataResporn.correctA[i]+1].childNodes[0].className = "correct";
             }
             console.log(parent);
-            parent.childNodes[1].childNodes[0].textContent ="Score : " + dataResporn.score;
+            console.log(parent.childNodes[4].childNodes[0]);
+            parent.childNodes[5].childNodes[0].textContent ="Score : " + dataResporn.score;
 
         })
 }
