@@ -107,7 +107,7 @@
 }
 
 small{
-    color: red;
+    color: #0F53F6;
 }
 
 /*============================== Manu page ===================================== */
@@ -335,7 +335,7 @@ hr {
             justify-content: center;
             display: flex;
             text-align: right;
-            background-color: gold;
+            background-color: #0F53F6;
             width: 100%;
             height: 100%;
             z-index: 1;
@@ -442,7 +442,8 @@ hr {
 /* quiz card */
 
 .card {
-    background: rgb(226, 222, 163);
+    /* background: rgb(226, 222, 163); */
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
 
@@ -450,16 +451,22 @@ hr {
 .icons {
     margin-left: 10px;
     font-size: 30px;
-    color: #de2f2f;
+    color: #727272;
 }
 
 .icons:hover {
     cursor: pointer;
-    color: #ae0303;
+    color: #999797;
+}
+
+.btn-play-quiz{
+    padding: 4px 20px;
+    background: #0F53F6;
+    color: white;
 }
 
 .block-score, .divTitleQuiz {
-    background: rgb(223, 207, 106);
+    background: #0F53F6;
     padding: 30px 20px;
     display: flex;
     justify-content: space-between;
@@ -494,7 +501,7 @@ hr {
     padding: 20px;
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.815);
-    border-top: 8px solid #31c727;
+    /* border-top: 8px solid #0F53F6; */
     border-radius: 7px 7px 7px 7px;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 
@@ -509,8 +516,8 @@ hr {
     margin-top: 60px;
     height: 60vh;
     width: 60%;
-    background: rgb(239, 196, 95);
-    color: #fff;
+    /* background: #0F53F6; */
+    color: rgb(0, 0, 0);
     font-weight: bold;
     font-size: 56px;
     display: flex;
@@ -527,7 +534,7 @@ hr {
 }
 
 .link-back, .btn-play-again {
-    background: #25c6e6;
+    background: #0F53F6;
     padding: 8px 30px;
     font-weight: bold;
     cursor: pointer;

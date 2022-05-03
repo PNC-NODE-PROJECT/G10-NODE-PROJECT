@@ -24,7 +24,7 @@ function displayQuiz() {
                     cardHeader.className = "card-header";
                     eachQuiz.appendChild(cardHeader);
                 
-                    let titleQuiz = document.createElement("h1");
+                    let titleQuiz = document.createElement("h4");
                     titleQuiz.textContent = title.title;
                     cardHeader.appendChild(titleQuiz);
         
@@ -37,7 +37,7 @@ function displayQuiz() {
                     cardFooter.appendChild(footerLeft);
         
                     let btnPlay = document.createElement("a");
-                    btnPlay.className = "btn bg-success";
+                    btnPlay.className = "btn btn-play-quiz";
                     btnPlay.textContent = "Play";
                     btnPlay.id = title._id;
                     btnPlay.href = "../display_quiz/display_quiz.html";
@@ -49,13 +49,13 @@ function displayQuiz() {
                     cardFooter.appendChild(footerRight);
         
                     let iEdit = document.createElement("i");
-                    iEdit.className = "fa fa-edit text-danger icons";
+                    iEdit.className = "fa fa-edit text-dark icons";
                     iEdit.id = title._id;
                     iEdit.addEventListener("click", editQuiz);
                     footerRight.appendChild(iEdit);
                     
                     let iDelete = document.createElement("i");
-                    iDelete.className = "fa fa-trash text-danger icons";
+                    iDelete.className = "fa fa-trash text-dark icons";
                     iDelete.id = title._id;
                     iDelete.addEventListener("click", deleteQuiz);
                     footerRight.appendChild(iDelete);

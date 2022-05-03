@@ -113,6 +113,7 @@ function modalOptionAnswers(){
 function hideEditeQuestion(){
     let hideEditeQuestion = document.querySelector("#questions-edite");
     hideEditeQuestion.style.display = "none";
+    questionID = [];
 }
 
 // show the place for edite question
@@ -214,6 +215,7 @@ function addQuestionToMongoDB(){
     data['idOfQ'] = contentTitle.childNodes[1].id;
     
     console.log(contentTitle.childNodes[1].id);
+    console.log(data);
 
     axios.post("/questions", data).then((resporn)=>{
         let result = resporn.data;
@@ -239,7 +241,7 @@ function addQuestionToMongoDB(){
                 containEachAnswer.className='contain-each-answer';
                 // contain answers option===========
                 let option = document.createElement('li');
-                option.style.listStyleType = "circle";
+                option.style.listStyleType = "disc";
                 if (result.typeOfQ == "checkbox") {
                     option.style.listStyleType = "square";
                 }
@@ -300,6 +302,7 @@ function addQuestionToMongoDB(){
                 eachDelete.childNodes[1].checked=false;
                 eachDelete.childNodes[3].value='';
             }
+            data ={};
     })
 }
 
@@ -322,10 +325,12 @@ function deleteQuestion(e){
 //========== show data question for edite ============
 function showDataToUpdate(e){       
     showEditeQuestion();
+    console.log(e.target.parentNode.parentNode.parentNode.id);
     let id = e.target.parentNode.parentNode.parentNode.id;     
     questionID.push(id);
     axios.get("/questions/question/"+id).then((resporn)=>{
         let result = resporn.data[0];
+        console.log(result);
         questionEdit.push(result);
         document.querySelector('.question-edite').value = result.question;
         document.querySelector('.types-edite').value = result.typeOfQ;
@@ -337,12 +342,14 @@ function showDataToUpdate(e){
             allAnswer[i].value = result.answers[i];
         }
         for (i=0; i<4; i++){
+            correction[i].checked = false;
             for (index=0; index<4; index++){
                 if(i == result.correctA[index]){
                     correction[i].checked = true;
+                    console.log(result.correctA[index]);
                 }
-                correction[i].type = result.typeOfQ;
             }
+            correction[i].type = result.typeOfQ;
         }
     })
 }
@@ -367,7 +374,6 @@ function editeQuestionInMongDB(){
         let data = {id: questionID[0], question: question, answers: answer, correctA: correctAnswer, score:scores, typeOfQ:type};
 
         axios.put("/questions", data).then((result)=>{
-            hideEditeQuestion()
             console.log(result);
             let resporn = result.config.data;
             let dataResporn = JSON.parse(resporn);
@@ -380,9 +386,24 @@ function editeQuestionInMongDB(){
             for(i=0; i<dataResporn.correctA.length; i++){
                 parent.childNodes[dataResporn.correctA[i]+1].childNodes[0].className = "correct";
             }
+            for (i=1; i<5; i++){
+                // for (index=0; index<result.correctA.length; index++){
+                    if (dataResporn.typeOfQ == "checkbox") {
+                        parent.childNodes[i].childNodes[0].style.listStyleType = "square";
+                    }
+                    // if (i == result.correctA[index]){
+                        if (dataResporn.typeOfQ == "radio") {
+                            parent.childNodes[i].childNodes[0].style.listStyleType = "disc";
+                        }
+                    //     option.className='correct';
+                    // }
+                // }
+            }
             console.log(parent);
             parent.childNodes[5].childNodes[0].textContent ="Score : " + dataResporn.score;
-
+            
+            // questionID = [];
+            hideEditeQuestion()
         })
 }
 
@@ -478,7 +499,7 @@ function showDataForEdit(){
                     containEachAnswer.className='contain-each-answer';
                     // contain answers option===========
                     let option = document.createElement('li');
-                    option.style.listStyleType = "circle";
+                    option.style.listStyleType = "disc";
                     if (result.typeOfQ == "checkbox") {
                         option.style.listStyleType = "square";
                     }
