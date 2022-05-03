@@ -1,3 +1,7 @@
+function noBack()
+{
+    window.history.forward();
+}
 // TO SHOW THE RESULT OF QUIZ
 function correctionQuiz() {
 
@@ -123,12 +127,21 @@ function correctionQuiz() {
         index += 1;
     }
 
-    let linkBack = document.createElement("a");
-    linkBack.className = "btn link-back";
-    linkBack.href = "../home/home.html?id=theavy";
-    linkBack.textContent = "Back";
-    blockResult.appendChild(linkBack);
+    let divBtn = document.createElement("div");
+    divBtn.className = "div-btn";
+    blockResult.appendChild(divBtn);
 
+    let linkBack = document.createElement("a");
+    linkBack.className = "btn link-back ";
+    linkBack.href = "../home/home.html";
+    linkBack.textContent = "Back";
+    divBtn.appendChild(linkBack);
+    
+    let btnPlayAgain = document.createElement("a");
+    btnPlayAgain.className = "btn btn-play-again";
+    btnPlayAgain.href = "../display_quiz/display_quiz.html";
+    btnPlayAgain.textContent = "Play Again";
+    divBtn.appendChild(btnPlayAgain);
 }
 
 let container = document.querySelector(".main-container");

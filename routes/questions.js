@@ -29,6 +29,17 @@ router.get("/:quizId", (req, res) => {
     })
 })
 
+// get question
+router.get("/question/:questionId", (req, res) => {
+    questionModel.find({_id: req.params.questionId})
+    .then((result) => { 
+        res.send(result)
+    })
+    .catch((error) => {
+        res.send(error)
+    })
+})
+
 // delete a question
 router.delete("/:id", (req, res) => {
     let questId = req.params.id;

@@ -1,11 +1,14 @@
 //====================== data =============================
+function noBack()
+{
+    window.history.forward();
+}
 let questionID = [];
 let titleID = [];
 
 // display when data input validation is not correct
 function showInputError(input, errorInput){
     input.textContent = errorInput
-    console.log(errorInput);
     if (errorInput.length < 1){
         return true;
     }else{
@@ -77,7 +80,6 @@ function checkAllEditInput(){
     let noCorrect = correctionError === true ? showInputError(correction, "Please choose the correct answer!"):showInputError(correction, "");
 
     if(questionResporn && noCorrect && answerError.length==0){
-        console.log("Your Data validation is success");
         editeQuestionInMongDB()
     }
     
@@ -126,14 +128,14 @@ function showEditeTitle(){
 
 //================= Add data title ==================
 function addTitleToMongDB(){
-    // let quizTitle = document.getElementsByClassName('quiz-title');
-    let playerID = new URLSearchParams(window.location.search).get("id");
+    let playerID = sessionStorage.getItem("id");
     let addTitle = document.querySelector('.title-input');
     let showBtnEditeTitle = document.querySelector('.button-edite-title');
     let hideBtnCreateTitle = document.querySelector('.button-add-title');
     let contentTitle = document.querySelector(".title-quiz");
     let title = document.createElement('h2');
     title.className="quiz-title";
+    // check for User don't complet title 
     if(addTitle.value.length>0){
         data = {title: addTitle.value,playerID: playerID};
     }else{
@@ -146,9 +148,7 @@ function addTitleToMongDB(){
         title.id = result._id;
         title.textContent = result.title;
         contentTitle.appendChild(title);
-        console.log(contentTitle.childNodes[5].id);
     })
-
     hideEditeTitle()
 }
 
@@ -166,14 +166,10 @@ function editeTitleToMongDB(){
 
     axios.put("/titles", data).then((response) => {
         let result = response.config.data;
-        // title.id = result._id;
-        // contentTitle.appendChild(title);
         let got = JSON.parse(result);
         title.textContent = got.title;
-        console.log(got);
-        console.log("hELLO wORLD hOW aRE yOU ?");
-    })
 
+    })
     hideEditeTitle()
 }
 
@@ -215,7 +211,7 @@ function addQuestionToMongoDB(){
 
         let containShowQuiz = document.querySelector('.show-quizs');
 
-            let containEachQuiz = document.createElement('div');
+        let containEachQuiz = document.createElement('div');
             containEachQuiz.className='contain-each-question';
             containEachQuiz.id=result._id;
             containShowQuiz.appendChild(containEachQuiz);
@@ -233,23 +229,26 @@ function addQuestionToMongoDB(){
                 containEachAnswer.className='contain-each-answer';
                 // contain answers option===========
                 let option = document.createElement('li');
+                option.style.listStyleType = "circle";
+                if (result.typeOfQ == "checkbox") {
+                    option.style.listStyleType = "square";
+                }
                 for (index=0; index<result.correctA.length; index++){
                     if (i == result.correctA[index]){
+                        if (result.typeOfQ == "radio") {
+                            option.style.listStyleType = "disc";
+                        }
                         option.className='correct';
                         console.log("Can add class");
                     }
                 }
-                // answerOption.appendChild(option);
                 containEachAnswer.appendChild(option);
-                // answerOption.appendChild(option);
-                // containEachAnswer.appendChild(answerOption);
                 // contain answers =================
                 let containAnswer = document.createElement('div');
                 containAnswer.className = 'contain-answer';
                 containAnswer.textContent = result.answers[i];
                 containEachAnswer.appendChild(containAnswer);
                 containEachQuiz.appendChild(containEachAnswer);
-                // console.log(containEachAnswer);
             }
             // score update delete
             let container = document.createElement('div');
@@ -274,7 +273,7 @@ function addQuestionToMongoDB(){
             edite_question.className = "btn";
             edite_question.id = "edite";
             edite_question.addEventListener("click", showDataToUpdate);
-            edite_question.textContent = "EDITE";
+            edite_question.textContent = "EDIT";
             // edite_question.onclick(deleteQuestion());
             group_update.appendChild(edite_question);
             
@@ -290,8 +289,6 @@ function addQuestionToMongoDB(){
                 eachDelete.childNodes[1].checked=false;
                 eachDelete.childNodes[3].value='';
             }
-        // }
-        console.log(containShowQuiz);
     })
 }
 
@@ -301,31 +298,23 @@ function deleteQuestion(e){
     let pare = e.target;
     let taskToDelete = pare.parentNode.parentNode.parentNode;
     axios.delete("/questions/"+taskToDelete.id).then((result)=>{
-        alert("Hello world how are you?");
         console.log(result.data);
     });
     contentParent.removeChild(taskToDelete);
-
-    console.log(taskToDelete);
 }
 
 //========== show data question for edite ============
-function showDataToUpdate(e){
-    console.log("Hello world how are you?");         
+function showDataToUpdate(e){       
     showEditeQuestion();
-    let id = e.target.parentNode.parentNode.parentNode.id;
-    console.log(id);         
+    let id = e.target.parentNode.parentNode.parentNode.id;     
     questionID.push(id);
-    axios.get("/questions/"+id).then((resporn)=>{
+    axios.get("/questions/question/"+id).then((resporn)=>{
         let result = resporn.data[0];
-        console.log(result);
         document.querySelector('.question-edite').value = result.question;
         document.querySelector('.types-edite').value = result.typeOfQ;
         document.querySelector('.scores-edite').value = result.score;
         let allAnswer = document.querySelectorAll('.answer-edite');
-        console.log(allAnswer);
         let correction = document.getElementsByName('correction');
-        console.log(correction);
         document.getElementsByClassName("left-edite").id = id;
         for (i=0; i<4; i++){
             allAnswer[i].value = result.answers[i];
@@ -334,7 +323,6 @@ function showDataToUpdate(e){
             for (index=0; index<4; index++){
                 if(i == result.correctA[index]){
                     correction[i].checked = true;
-                    // console.log("ello world");
                 }
             }
         }
@@ -347,9 +335,6 @@ function editeQuestionInMongDB(){
     let scores = document.querySelector('.scores-edite').value;
     let allAnswer = document.querySelectorAll('.answer-edite');
     let correction = document.getElementsByName('correction');
-    // let save = document.getElementById('edite-question');
-    // let data = {};
-    // let id = e;
     let answer = [];
     let correctAnswer = [];
     // showDataToUpdate(id)
@@ -362,17 +347,11 @@ function editeQuestionInMongDB(){
 
         let data = {id: questionID[0], question: question, answers: answer, correctA: correctAnswer, score:scores, typeOfQ:type};
 
-    
-        // console.log(data);
         axios.put("/questions", data).then((result)=>{
             hideEditeQuestion()
             let resporn = result.config.data;
             let dataResporn = JSON.parse(resporn);
-            console.log(dataResporn);
             let parent = document.getElementById(questionID[0].toString());
-            // console.log(questionID[0]);
-            console.log(parent);
-            // console.log(parent.childNodes);
             parent.childNodes[0].textContent = dataResporn.question;
             for(i=1; i<5; i++){
                 parent.childNodes[i].childNodes[1].textContent = dataResporn.answers[i-1];
@@ -384,28 +363,20 @@ function editeQuestionInMongDB(){
             parent.childNodes[5].childNodes[0].textContent = dataResporn.score;
 
         })
-        // hideEditeQuestion();
-        // questionID = [];
 }
 
 // Concel create tasks
 function concelTask(){
     let contentTitle = document.querySelector(".title-quiz");
     let id = contentTitle.childNodes[5].id;
-    console.log(contentTitle.childNodes[5].id);
     axios.delete("/questions/delete/"+id).then((resporn)=>{
-        alert("delete quez success");
+        console.log("delete quez success");
     })
     axios.delete("/titles/"+id).then((resporn)=>{
-        alert("delete title success")
+        console.log("delete title success");
     })
-    // location.replace("http://localhost/")
-    let Password = new URLSearchParams(window.location.search).get("id")
-    location.replace("http://localhost/views/home/home.html?id="+Password)
+    location.replace("http://localhost/views/home/home.html")
 }
-console.log(document.querySelector("body"));
-
 function saveQuiz(){
-    let Password = new URLSearchParams(window.location.search).get("id")
-    location.replace("http://localhost/views/home/home.html?id="+Password)
+    location.replace("http://localhost/views/home/home.html")
 }

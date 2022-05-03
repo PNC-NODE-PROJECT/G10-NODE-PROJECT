@@ -14,14 +14,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
-<body>
+<body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">
     <!-- menu -->
     <div class="menu-container">
         <div class="menu-group">
             <button class="onPage menu-task" type="button" id="button-task">Your Task</button>
             <button class="menu-task" type="button" id="button-create" onclick="goToCreatePage()">Create</button>
         </div>
-        <div class="logout"><a href="../../index.html"><button type="button" class="button-logout">Logout</button></a></div>
+        <div class="logout"><button type="button" class="button-logout" onclick="logout()">Logout</button></div>
     </div>
     
     <div class="main-container">

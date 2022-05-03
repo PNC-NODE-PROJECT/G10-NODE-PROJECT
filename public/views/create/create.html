@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
-<body>
+<body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">
     <!-- menu -->
     
     <div class="menu-container">
@@ -26,7 +26,7 @@
                     <!-- <a href="../home/home.html"> -->
                         <button type="button" class="button-save button" onclick="saveQuiz()">Save</button>
                     <!-- </a> -->
-                    <button type="button" class="button-concel button" onclick="concelTask()">concel</button>
+                    <button type="button" class="button-concel button" onclick="concelTask()">cancel</button>
                 </div>
                 <div class="icon">
                     <i class="bi bi-three-dots" onclick="showEditeTitle()"></i>
@@ -93,7 +93,7 @@
             <div class="title-content">
                 <h1>TITLE QUIZ</h1>
                 <div><input type="text" class="title-input" placeholder="Title"></div>
-                <button type="button" class="button-edite-title" onclick="editeTitleToMongDB()">EDITE</button>
+                <button type="button" class="button-edite-title" onclick="editeTitleToMongDB()">EDIT</button>
                 <button type="button" class="button-add-title" onclick="addTitleToMongDB()">CREATE</button>
             </div>
         </dialog>

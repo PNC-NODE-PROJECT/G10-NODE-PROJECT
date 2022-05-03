@@ -302,7 +302,6 @@ hr {
             margin: 10px 0;
         }
         .contain-each-answer li{
-            list-style-type: circle;
             font-size: 40px;
             width: 30px;
         }
@@ -527,9 +526,24 @@ hr {
     justify-content: end;
 }
 
-.link-back {
+.link-back, .btn-play-again {
     background: #25c6e6;
-    padding: 10px 40px;
+    padding: 8px 30px;
     font-weight: bold;
+    cursor: pointer;
+    margin-left: 20px;
+    border-radius: 5px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 
 }
+
+.div-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.btn-submit {
+    margin: 20px 0;
+}
+
