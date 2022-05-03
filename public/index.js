@@ -52,7 +52,7 @@ function showInputError(input, errorInput){
 
 // add data user create account into database
 function createUser(name, useremail, userpassword){
-    let data = {username:name, email: useremail, password: userpassword+name+useremail}
+    let data = {username:name, email: useremail, password: userpassword}
     axios.post("/users", data).then((resporn)=>{
         sessionStorage.setItem("id", userpassword);
         sessionStorage.setItem("email", useremail);

@@ -15,7 +15,7 @@ function displayQuiz() {
         let titles = resporn.data;
 
         for (let title of titles) {
-                if(title.playerID == sessionStorage.getItem("id")){
+                if(title.playerID == sessionStorage.getItem("playerName")+sessionStorage.getItem("email")+sessionStorage.getItem("id")){
                     let eachQuiz = document.createElement("div");
                     eachQuiz.className = "card m-3 col-3";
                     homeContainer.appendChild(eachQuiz);

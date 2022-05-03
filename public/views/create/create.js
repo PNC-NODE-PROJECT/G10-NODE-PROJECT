@@ -145,9 +145,9 @@ function addTitleToMongDB(){
     title.className="quiz-title";
     // check for User don't complet title 
     if(addTitle.value.length>0){
-        data = {title: addTitle.value,playerID: playerID};
+        data = {title: addTitle.value,playerID: sessionStorage.getItem("playerName")+sessionStorage.getItem("email")+sessionStorage.getItem("id")};
     }else{
-        data = {title: "Untitle",playerID: playerID};
+        data = {title: "Untitle",playerID: sessionStorage.getItem("playerName")+sessionStorage.getItem("email")+sessionStorage.getItem("id")};
     }
     axios.post("/titles", data).then((response) => {
         let result = response.data;
@@ -166,8 +166,7 @@ function editeTitleToMongDB(){
     let addTitle = document.querySelector('.title-input');
     let title = document.querySelector('.quiz-title');
     let contentTitle = document.querySelector(".title-quiz");
-    console.log(contentTitle);
-    console.log(contentTitle.childNodes[1]);
+
     if(addTitle.value.length>0){
         data = {id: contentTitle.childNodes[1].id, title: addTitle.value};
     }else{
