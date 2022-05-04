@@ -78,11 +78,13 @@ function userLogin(){
             }
             if(userCorrect && passwordCorrect){
                 sessionStorage.setItem("email", allUser[i].email);
+                var index = i;
             }
         }
         if(userCorrect && passwordCorrect){
             sessionStorage.setItem("id", Password);
             sessionStorage.setItem("playerName", Name);
+            sessionStorage.setItem("userid", allUser[index]._id);
             location.replace("http://localhost/views/home/home.html") 
         }else{
             loginDataValidation(userCorrect, passwordCorrect)

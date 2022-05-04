@@ -7,16 +7,32 @@
 .logout{
     text-align: right;
     padding: 0 20px;
-    margin-top: -70px;
-    margin-bottom: 60px;
+    /* margin-top: -70px;
+    margin-bottom: 60px; */
 }
 .logout .button-logout{
     padding: 5px 20px;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     background-color: #0F53F6;
     color: white;
     border: none;
     border-radius: 3px;
+}
+
+.menu-container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 3px solid #0f54f660;
+    align-items: center;
+}
+
+.user-name {
+    text-transform: capitalize;
+    font-size: 20px;
+    margin-left: 20px;
+    font-weight: bold;
+    color: #0F53F6;
+
 }
 
 /* ========================= Page login Sign up ================================ */
@@ -115,11 +131,11 @@ small{
     .menu-group{
         /* background-color: orange; */
         text-align: center;
-        border-bottom: 3px solid #0f54f660;
+        /* border-bottom: 3px solid #0f54f660; */
         /* margin-bottom: 10px; */
     }
     .menu-task{
-        margin: 20px 8px;
+        margin: 10px 8px;
         padding: 10px 10px;
         border: none;
         font-size: 19px;

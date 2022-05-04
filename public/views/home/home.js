@@ -1,4 +1,5 @@
 // TO DISPLAY ALL LIST OF QUIZZES
+
 // const bcrypt = require("bcrypt");
 function noBack()
 {
@@ -103,6 +104,9 @@ function editQuiz(event) {
 
 }
 
+let userName = document.querySelector(".user-name");
+let playerName = sessionStorage.getItem("playerName");
+userName.textContent = playerName;
 let container = document.querySelector(".main-container");
 displayQuiz();
 
@@ -125,3 +129,4 @@ function logout(){
 if(sessionStorage.getItem("id")==null){
     location.replace("http://localhost/index.html")
 }
+

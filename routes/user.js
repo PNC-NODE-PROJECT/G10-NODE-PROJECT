@@ -36,7 +36,7 @@ router.get("/", (req, res)=>{
 // get one user
 router.get("/:id", (req, res)=>{
     let userId = req.params.id;
-    userModel.get({_id: userId})
+    userModel.find({_id: userId})
     .then((result) =>{
         res.send(result)
     })
