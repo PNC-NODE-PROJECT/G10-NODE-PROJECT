@@ -58,7 +58,7 @@ function createUser(name, useremail, userpassword){
         sessionStorage.setItem("id", userpassword);
         sessionStorage.setItem("email", useremail);
         sessionStorage.setItem("playerName", name);
-        location.replace("views/home/home.html")
+        location.replace("/views/home/home.html")
     })
 }
 
@@ -86,7 +86,7 @@ function userLogin(){
             sessionStorage.setItem("id", Password);
             sessionStorage.setItem("playerName", Name);
             sessionStorage.setItem("userid", allUser[index]._id);
-            location.replace("views/home/home.html") 
+            location.replace("/views/home/home.html") 
         }else{
             loginDataValidation(userCorrect, passwordCorrect)
         }

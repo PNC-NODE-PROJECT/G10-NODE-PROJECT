@@ -168,5 +168,5 @@ function generatePDF(){
 //                      session storage empty
 // ================================================================
 if(sessionStorage.getItem("id")==null){
-    location.replace("index.html")
+    location.replace("/index.html")
 }
