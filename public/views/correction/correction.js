@@ -164,10 +164,9 @@ function generatePDF(){
       });
 }
 
-
 // ================================================================
 //                      session storage empty
 // ================================================================
 if(sessionStorage.getItem("id")==null){
-    location.replace("http://localhost/index.html")
+    location.replace("index.html")
 }

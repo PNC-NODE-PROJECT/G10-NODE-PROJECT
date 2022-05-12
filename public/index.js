@@ -2,6 +2,7 @@ function noBack()
 {
     window.history.forward();
 }
+
 function hidLogin(){
     document.querySelector("#login").style.display = "none";
     document.querySelector("#signup").style.display = "flex";
@@ -33,7 +34,7 @@ function signUpDataValidation(){
 
     let usernameCheck = userName.value === "" ? showInputError(userNameError, "Please check your user name!") : showInputError(userNameError, "");
     let emailCheck = userEmail.value.match(emailValidate) ? showInputError(emailError, "") : showInputError(emailError, "Please check your Email!");
-    let passwordCheck = userPassword.value.length < 6 ? showInputError(passwordNameError, "Please check your password!") : showInputError(passwordNameError, "");
+    let passwordCheck = userPassword.value.length < 6 ? showInputError(passwordNameError, "Please check your password (we need 6 characters)") : showInputError(passwordNameError, "");
 
     if (usernameCheck && emailCheck && passwordCheck){
         createUser(userName.value, userEmail.value, userPassword.value)
@@ -57,7 +58,7 @@ function createUser(name, useremail, userpassword){
         sessionStorage.setItem("id", userpassword);
         sessionStorage.setItem("email", useremail);
         sessionStorage.setItem("playerName", name);
-        location.replace("http://localhost/views/home/home.html")
+        location.replace("views/home/home.html")
     })
 }
 
@@ -85,7 +86,7 @@ function userLogin(){
             sessionStorage.setItem("id", Password);
             sessionStorage.setItem("playerName", Name);
             sessionStorage.setItem("userid", allUser[index]._id);
-            location.replace("http://localhost/views/home/home.html") 
+            location.replace("views/home/home.html") 
         }else{
             loginDataValidation(userCorrect, passwordCorrect)
         }

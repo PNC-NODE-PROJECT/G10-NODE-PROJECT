@@ -100,7 +100,7 @@ function deleteQuiz(event) {
 // TO EDIT QUIZ
 function editQuiz(event) {
     let id = event.target.id;
-    location.replace("http://localhost/views/create/create.html?qId="+id)
+    location.replace("views/create/create.html?qId="+id)
 
 }
 
@@ -111,13 +111,13 @@ let container = document.querySelector(".main-container");
 displayQuiz();
 
 function goToCreatePage(){
-    location.replace("http://localhost/views/create/create.html")
+    location.replace("views/create/create.html")
 }
 
 
 // create user logout
 function logout(){
-    location.replace("http://localhost/index.html");
+    location.replace("index.html");
     sessionStorage.removeItem("id");
 }
 
@@ -127,6 +127,6 @@ function logout(){
 //                      session storage empty
 // ================================================================
 if(sessionStorage.getItem("id")==null){
-    location.replace("http://localhost/index.html")
+    location.replace("index.html")
 }
 

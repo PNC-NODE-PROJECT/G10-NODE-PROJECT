@@ -416,12 +416,12 @@ function concelTask(){
     axios.delete("/titles/"+id).then((resporn)=>{
         console.log("delete title success");
     })
-    location.replace("http://localhost/views/home/home.html")
+    location.replace("views/home/home.html")
 }
 
 // for save the quiz create
 function saveQuiz(){
-    location.replace("http://localhost/views/home/home.html")
+    location.replace("views/home/home.html")
 }
 
 
@@ -589,7 +589,7 @@ function concelTaskEdit(){
         })
     }
 
-    location.replace("http://localhost/views/home/home.html");
+    location.replace("views/home/home.html");
     titleEdit={};
     questionEdit=[];
     questionCreate=[];
@@ -602,5 +602,5 @@ function concelTaskEdit(){
 //                      session storage empty
 // ================================================================
 if(sessionStorage.getItem("id")==null){
-    location.replace("http://localhost/index.html")
+    location.replace("index.html")
 }
