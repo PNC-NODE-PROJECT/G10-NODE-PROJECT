@@ -1,6 +1,5 @@
 // TO DISPLAY ALL LIST OF QUIZZES
 
-// const bcrypt = require("bcrypt");
 function noBack()
 {
     window.history.forward();
@@ -12,7 +11,6 @@ function displayQuiz() {
     container.appendChild(homeContainer);
     
     axios.get("/titles").then((resporn) => {
-        // let playerID = new URLSearchParams(window.location.search).get("id");
         let titles = resporn.data;
 
         for (let title of titles) {
@@ -41,9 +39,8 @@ function displayQuiz() {
                     btnPlay.className = "btn btn-play-quiz";
                     btnPlay.textContent = "Play";
                     btnPlay.id = title._id;
-                    btnPlay.href = "../display_quiz/display_quiz.html";
+                    btnPlay.href = "../display_quiz/display_quiz.html?id="+title._id;
                     footerLeft.appendChild(btnPlay);
-                    btnPlay.addEventListener("click", play);
         
                     let footerRight = document.createElement("div");
                     footerRight.className = "right d-flex align-items-center";
@@ -63,21 +60,6 @@ function displayQuiz() {
                 }
         }
     })
-}
-
-// TO SAVE ALL QUESTIONS OF QUIZ TO LOCALSTORAGE
-function play(event) {
-    let quiz = event.target.id;
-    axios.get("/questions/" + quiz).then((result) => {
-        let data = result.data;
-        saveData(data);
-    }) 
-}
-
-
-// CREATE FUNCTION TO SAVE DATA TO LOCALSTORAGE
-function saveData(data) {
-    localStorage.setItem('quizdatas', JSON.stringify(data));
 }
 
 // TO DELETE QUIZ
@@ -120,8 +102,6 @@ function logout(){
     location.replace("/index.html");
     sessionStorage.removeItem("id");
 }
-
-
 
 // ================================================================
 //                      session storage empty

@@ -63,8 +63,20 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+const scoreuserSchema = new mongoose.Schema({
+    useranswers: {
+        type: [Array],
+        required: true
+    },
+    totalscore: {
+        type: Array,
+        required: true
+    }
+})
+
 const questionModel = mongoose.model("questions", questionSchema);
 const quizModel = mongoose.model("quizes", quizSchema);
 const userModel = mongoose.model("users", userSchema);
+const scoreModel = mongoose.model("scores", scoreuserSchema);
 
-module.exports = {questionModel, quizModel, userModel};
+module.exports = {questionModel, quizModel, userModel, scoreModel};

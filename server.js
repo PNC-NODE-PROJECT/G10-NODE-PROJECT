@@ -16,10 +16,12 @@ const PORT = process.env.PORT || 3000;
 const questRoute = require("./routes/questions");
 const titleRoute = require("./routes/title");
 const userRoute = require("./routes/user");
+const scoreRoute = require("./routes/score");
 
 app.use("/questions", questRoute);
 app.use("/titles", titleRoute);
 app.use("/users", userRoute);
+app.use("/scores", scoreRoute);
 
 app.use(express.static("public"));
 
